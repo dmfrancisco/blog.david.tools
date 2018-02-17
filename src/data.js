@@ -32,13 +32,13 @@ export default {
     "hello-world": {
       title: "Hello World",
       summary: "Lorem Ipsum",
-      date: "Jan 1, 2018",
+      date: "2018-01-01",
       readtime: 3,
     },
     "hello-world-2": {
       title: "Hello World 2",
       summary: "Lorem Ipsum 2",
-      date: "Jan 2, 2018",
+      date: "2018-01-02",
       readtime: 4,
     },
   },

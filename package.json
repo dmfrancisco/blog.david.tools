@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "david.tools": "dmfrancisco/david.tools",
+    "moment": "^2.20.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
