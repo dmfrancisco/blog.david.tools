@@ -1,12 +1,7 @@
 import React, { Component } from "react";
-import base64 from "base-64";
 import fecha from "fecha";
 
-const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
-const headers = {
-  Authorization: `Basic ${base64.encode(accessToken + ":")}`,
-  Accept: "application/vnd.github.v3.html+json",
-};
+const headers = { Accept: "application/vnd.github.v3.html+json" };
 
 class Comments extends Component {
   state = {
