@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import readingTime from "reading-time";
 
 import Nav from "./Nav";
 
@@ -11,7 +12,7 @@ export default ({ nav, post }) => (
       <div>
         <NavLink to="/">Blog</NavLink> ·{" "}
         <em>
-          {post.date} · {post.readtime} min read
+          {post.date} · {readingTime("example").text}
         </em>
       </div>
 
