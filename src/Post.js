@@ -7,12 +7,12 @@ import base64 from "base-64";
 import "github-markdown-css";
 
 import Nav from "./Nav";
+import Comments from "./Comments";
 import "./Post.css";
+import "./markdown.css";
 
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
-const headers = { Accept: "application/vnd.github.v3.html" };
-headers["Authorization"] = `Basic ${base64.encode(accessToken + ":")}`;
-
+const headers = { Authorization: `Basic ${base64.encode(accessToken + ":")}` };
 class Post extends Component {
   state = {
     content: null,
@@ -64,17 +64,19 @@ class Post extends Component {
 
         <Nav items={nav} />
 
-        <section className="u-container">
-          <div>
+        <article className="Post u-container">
+          <header>
             <NavLink to="/">Blog</NavLink> ·{" "}
             <em>
               {moment(post.date, "YYYY-MM-DD").format("MMM D, YYYY")} ·{" "}
               {readingTime("example").text}
             </em>
-          </div>
+          </header>
 
           <div className="markdown-body" dangerouslySetInnerHTML={{ __html: content }} />
-        </section>
+        </article>
+
+        <Comments gist={post.gist} />
       </Fragment>
     );
   }
