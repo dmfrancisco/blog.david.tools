@@ -9,10 +9,10 @@ export default ({ nav, posts }) => (
 
     <section className="u-container">
       <ol className="Posts">
-        {posts.map(post => (
-          <li key={post.slug}>
+        {Object.entries(posts).map(([slug, post]) => (
+          <li key={slug}>
             <h3>
-              <NavLink to={post.slug}>{post.title}</NavLink>
+              <NavLink to={slug}>{post.title}</NavLink>
             </h3>
             <p>{post.summary}</p>
             <em>

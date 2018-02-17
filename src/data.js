@@ -28,20 +28,18 @@ export default {
       href: "mailto:hello@dmfranc.com",
     },
   ],
-  posts: [
-    {
-      slug: "hello-world",
+  posts: {
+    "hello-world": {
       title: "Hello World",
       summary: "Lorem Ipsum",
       date: "Jan 1, 2018",
       readtime: 3,
     },
-    {
-      slug: "hello-world-2",
+    "hello-world-2": {
       title: "Hello World 2",
       summary: "Lorem Ipsum 2",
       date: "Jan 2, 2018",
       readtime: 4,
     },
-  ],
+  },
 };
