@@ -1,7 +1,5 @@
 import React from "react";
 
-import "david.tools/src/Nav.css";
-
 export default ({ items }) => (
   <nav className="Nav u-container">
     <ul className="Nav-list">

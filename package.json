@@ -10,6 +10,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",
+    "react-loadable": "^5.3.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "react-snap": "^1.11.4",
@@ -18,7 +19,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && react-snap",
+    "postbuild": "sed -i '' 's/<link href=\"[^ ]*\" rel=\"preload\" as=\"script\">//g' $(find ./build -iname *.html)",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -26,5 +28,9 @@
     "printWidth": 100,
     "trailingComma": "es5",
     "jsxBracketSameLine": true
+  },
+  "reactSnap": {
+    "waitFor": 3000,
+    "preconnectThirdParty": false
   }
 }

@@ -4,12 +4,11 @@ import { NavLink } from "react-router-dom";
 import readingTime from "reading-time";
 import moment from "moment";
 import base64 from "base-64";
-import "github-markdown-css";
 
 import Nav from "./Nav";
 import Comments from "./Comments";
-import "./Post.css";
-import "./markdown.css";
+import CommentLink from "./CommentLink";
+import snapshot from "./snapshot";
 
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 const headers = { Authorization: `Basic ${base64.encode(accessToken + ":")}` };
@@ -76,7 +75,9 @@ class Post extends Component {
           <div className="markdown-body" dangerouslySetInnerHTML={{ __html: content }} />
         </article>
 
-        <Comments gist={post.gist} />
+        <div id="comments-root" data-gist={post.gist} />
+        {!snapshot && <Comments gist={post.gist} />}
+        <CommentLink gist={post.gist} />
       </Fragment>
     );
   }

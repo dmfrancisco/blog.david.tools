@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import base64 from "base-64";
 
-import "./Comments.css";
-import "./markdown.css";
-
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 const headers = {
   Authorization: `Basic ${base64.encode(accessToken + ":")}`,

@@ -1,8 +1,26 @@
 import React from "react";
 import { render } from "react-dom";
-import "typeface-karla";
+import Loadable from "react-loadable";
 
-import "david.tools/src/index.css";
-import App from "./App";
+import snapshot from "./snapshot";
+import "./index.css";
 
-render(<App />, document.getElementById("root"));
+const production = process.env.NODE_ENV === "production";
+
+const LoadableApp = Loadable({
+  loader: () => import("./App"),
+  loading: () => null,
+});
+
+const LoadableComments = Loadable({
+  loader: () => import("./Comments"),
+  loading: () => null,
+});
+
+if (snapshot || !production) {
+  const el = document.getElementById("root");
+  render(<LoadableApp />, el);
+} else {
+  const el = document.getElementById("comments-root");
+  if (el) render(<LoadableComments gist={el.dataset.gist} />, el);
+}
