@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import base64 from "base-64";
+import fecha from "fecha";
 
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 const headers = {
@@ -38,7 +39,7 @@ class Comments extends Component {
             />{" "}
             <a href={comment.user.html_url}>{comment.user.login}</a>{" "}
             <span>
-              {comment.created_at}
+              {fecha.format(new Date(comment.created_at), "HH:mm MMM D, YYYY")}
               {comment.created_at !== comment.updated_at && " · Edited"}
               {comment.author_association === "OWNER" && " · Owner"}
             </span>
