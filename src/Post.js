@@ -4,8 +4,10 @@ import { NavLink } from "react-router-dom";
 import readingTime from "reading-time";
 import moment from "moment";
 import base64 from "base-64";
+import "github-markdown-css";
 
 import Nav from "./Nav";
+import "./Post.css";
 
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 const headers = { Accept: "application/vnd.github.v3.html" };
@@ -71,7 +73,7 @@ class Post extends Component {
             </em>
           </div>
 
-          <div dangerouslySetInnerHTML={{ __html: content }} />
+          <div className="markdown-body" dangerouslySetInnerHTML={{ __html: content }} />
         </section>
       </Fragment>
     );
