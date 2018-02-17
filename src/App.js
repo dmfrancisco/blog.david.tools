@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Fragment } from "react";
+import { Helmet } from "react-helmet";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
-}
+import Posts from "./Posts";
+import NotFound from "./NotFound";
+import data from "./data";
 
-export default App;
+export default () => (
+  <Fragment>
+    <Helmet defaultTitle={data.helmet.title} titleTemplate={`%s · ${data.helmet.title}`} />
+
+    <Router>
+      <Switch>
+        <Route exact path="/" render={routeProps => <Posts {...data} />} />
+        <Route render={routeProps => <NotFound {...data} />} />
+      </Switch>
+    </Router>
+  </Fragment>
+);
