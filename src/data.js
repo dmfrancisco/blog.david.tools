@@ -29,17 +29,19 @@ export default {
     },
   ],
   posts: {
-    "hello-world": {
-      title: "Hello World",
-      summary: "Lorem Ipsum",
-      date: "2018-01-01",
-      readtime: 3,
+    "git-workflow": {
+      title: "Another Git Workflow",
+      summary:
+        "This workflow is heavily based on the branching model presented by Vincent Driessen on his blog and applies its tool, git-flow, to make it extremely easy to follow.",
+      date: "2013-03-02",
+      gist: "5072619",
     },
-    "hello-world-2": {
-      title: "Hello World 2",
-      summary: "Lorem Ipsum 2",
-      date: "2018-01-02",
-      readtime: 4,
+    bem: {
+      title: "Getting your head around BEM syntax",
+      summary:
+        "BEM – meaning block, element, modifier – is a front-end naming methodology. CSSWizardry uses a naming scheme based on BEM, but honed by Nicolas Gallagher.",
+      date: "2016-02-06",
+      gist: "4967354",
     },
   },
 };

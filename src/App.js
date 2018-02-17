@@ -14,11 +14,16 @@ export default () => (
     <Router>
       <Switch>
         <Route exact path="/" render={routeProps => <Posts {...data} />} />
-        <Route
-          exact
-          path="/:slug"
-          render={({ match }) => <Post nav={data.nav} post={data.posts[match.params.slug]} />}
-        />
+
+        {Object.entries(data.posts).map(([slug, post]) => (
+          <Route
+            key={slug}
+            exact
+            path={`/${slug}`}
+            render={({ match }) => <Post nav={data.nav} post={post} />}
+          />
+        ))}
+
         <Route render={routeProps => <NotFound {...data} />} />
       </Switch>
     </Router>

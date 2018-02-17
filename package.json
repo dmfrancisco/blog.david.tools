@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "base-64": "^0.1.0",
     "david.tools": "dmfrancisco/david.tools",
     "moment": "^2.20.1",
     "react": "^16.2.0",
