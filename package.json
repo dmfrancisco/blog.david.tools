@@ -5,8 +5,8 @@
   "dependencies": {
     "base-64": "^0.1.0",
     "david.tools": "dmfrancisco/david.tools",
+    "fecha": "^2.3.2",
     "github-markdown-css": "^2.10.0",
-    "moment": "^2.20.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-helmet": "^5.2.0",

@@ -2,7 +2,7 @@ import React, { Fragment, Component } from "react";
 import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import readingTime from "reading-time";
-import moment from "moment";
+import fecha from "fecha";
 import base64 from "base-64";
 
 import Nav from "./Nav";
@@ -67,7 +67,7 @@ class Post extends Component {
           <header>
             <NavLink to="/">Blog</NavLink> ·{" "}
             <em>
-              {moment(post.date, "YYYY-MM-DD").format("MMM D, YYYY")} ·{" "}
+              {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")} ·{" "}
               {readingTime("example").text}
             </em>
           </header>

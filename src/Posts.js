@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import readingTime from "reading-time";
-import moment from "moment";
+import fecha from "fecha";
 
 import Nav from "./Nav";
 
@@ -18,7 +18,7 @@ export default ({ nav, posts }) => (
             </h3>
             <p>{post.summary}</p>
             <em>
-              {moment(post.date, "YYYY-MM-DD").format("MMM D, YYYY")} ·{" "}
+              {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")} ·{" "}
               {readingTime("example").text}
             </em>
           </li>
