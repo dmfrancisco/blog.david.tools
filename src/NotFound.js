@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 
 import Illustration from "./img/NotFound";
-import "david.tools/src/NotFound.css";
 
 export default ({ nav }) => (
   <section className="NotFound">

@@ -65,8 +65,10 @@ class Post extends Component {
 
         <article className="Post u-container">
           <header>
-            <NavLink to="/">Blog</NavLink> ·{" "}
-            <em>
+            <NavLink className="Posts-title Posts-title--header" to="/">
+              Blog
+            </NavLink>{" "}
+            <em className="Posts-info Posts-info--header">
               {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")} ·{" "}
               {readingTime("example").text}
             </em>

@@ -21,25 +21,35 @@ class Comments extends Component {
   render() {
     const { comments } = this.state;
 
+    if (comments.length === 0) {
+      return null;
+    }
+
     return (
       <section className="u-container">
-        <h2>Comments</h2>
+        <h2 className="Posts-title">Comments</h2>
 
         {comments.map(comment => (
-          <div key={comment.id}>
-            <img
-              src={`${comment.user.avatar_url}&size=64`}
-              alt={`${comment.user.login} avatar`}
-              width={32}
-            />{" "}
-            <a href={comment.user.html_url}>{comment.user.login}</a>{" "}
-            <span>
-              {fecha.format(new Date(comment.created_at), "HH:mm MMM D, YYYY")}
-              {comment.created_at !== comment.updated_at && " · Edited"}
-              {comment.author_association === "OWNER" && " · Owner"}
-            </span>
+          <div className="Comment" key={comment.id}>
+            <div className="Comment-header">
+              <img
+                className="Comment-avatar"
+                src={`${comment.user.avatar_url}&size=40`}
+                alt={`${comment.user.login} avatar`}
+                width={20}
+                draggable="false"
+              />{" "}
+              <a className="Comment-author" href={comment.user.html_url}>
+                {comment.user.login}
+              </a>{" "}
+              <span className="Comment-info">
+                {comment.author_association === "OWNER" && "Author · "}
+                {comment.created_at !== comment.updated_at && "Edited · "}
+                {fecha.format(new Date(comment.created_at), "HH:mm MMM D, YYYY")}
+              </span>
+            </div>
             <div
-              className="markdown-body"
+              className="Comment-body markdown-body"
               dangerouslySetInnerHTML={{ __html: comment.body_html }}
             />
           </div>

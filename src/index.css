@@ -1,7 +1,12 @@
 @import "~typeface-karla";
 @import "~david.tools/src/index.css";
 @import "~david.tools/src/Nav.css";
+@import "~david.tools/src/NotFound.css";
 @import "~github-markdown-css";
+@import "./Posts.css";
+@import "./Post.css";
+@import "./Comments.css";
+@import "./CommentLink.css";
 
 .markdown-body {
   font-family: inherit;
@@ -10,16 +15,15 @@
   font-size: inherit;
 }
 
-.markdown-body p {
-  hyphens: auto;
-}
-
 .markdown-body h1,
 .markdown-body h2 {
   border: none;
 }
 
-.Post {
-  font-size: 1.1rem;
-  margin-bottom: 20vmin;
+.markdown-body p {
+  hyphens: auto;
+}
+
+.markdown-body img {
+  border-radius: 2px;
 }
