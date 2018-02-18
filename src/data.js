@@ -29,19 +29,12 @@ export default {
     },
   ],
   posts: {
-    "git-workflow": {
-      title: "Another Git Workflow",
+    "creating-blog-with-cra-and-github": {
+      title: "Creating a blog with Create React App and GitHub",
       summary:
-        "This workflow is heavily based on the branching model presented by Vincent Driessen on his blog and applies its tool, git-flow, to make it extremely easy to follow.",
-      date: "2013-03-02",
-      gist: "5072619",
-    },
-    bem: {
-      title: "Getting your head around BEM syntax",
-      summary:
-        "BEM – meaning block, element, modifier – is a front-end naming methodology. CSSWizardry uses a naming scheme based on BEM, but honed by Nicolas Gallagher.",
-      date: "2016-02-06",
-      gist: "4967354",
+        "There are great open source tools to generate static blogs, and Create React App can be one of them, if you add some tools to address some of its limitations.",
+      date: "2018-02-18",
+      gist: "f4f5311ad2ec25147bc458d791fdaeb5",
     },
   },
 };
