@@ -1,11 +1,13 @@
 {
   "name": "blog.david.tools",
+  "homepage": "https://blog.david.tools",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "base-64": "^0.1.0",
     "david.tools": "dmfrancisco/david.tools",
     "fecha": "^2.3.2",
+    "gh-pages": "^1.1.0",
     "github-markdown-css": "^2.10.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -18,9 +20,12 @@
     "typeface-karla": "^0.0.54"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build && react-snap",
-    "postbuild": "sed -i '' 's/<link href=\"[^ ]*\" rel=\"preload\" as=\"script\">//g' $(find ./build -iname *.html)",
+    "postbuild":
+      "sed -i '' 's/<link href=\"[^ ]*\" rel=\"preload\" as=\"script\">//g' $(find ./build -iname *.html)",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
