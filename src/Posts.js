@@ -15,9 +15,6 @@ export default ({ nav, posts }) => (
       <ol className="Posts">
         {Object.entries(posts).map(([slug, post]) => (
           <li className="Posts-item" key={slug}>
-            <NavLink to={slug} hidden className="Posts-linkMask">
-              {" "}
-            </NavLink>
             <h2 className="Posts-subtitle">
               <NavLink className="Posts-link" to={slug}>
                 {post.title}
@@ -28,6 +25,10 @@ export default ({ nav, posts }) => (
               {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")} ·{" "}
               {readingTime("example").text}
             </em>
+
+            <NavLink to={slug} hidden className="Posts-linkMask">
+              {" "}
+            </NavLink>
           </li>
         ))}
       </ol>

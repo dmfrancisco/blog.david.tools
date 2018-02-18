@@ -21,10 +21,7 @@ class Post extends Component {
     return fetch(`https://api.github.com/markdown`, {
       headers,
       method: "POST",
-      body: JSON.stringify({
-        mode: "gfm",
-        text,
-      }),
+      body: JSON.stringify({ text }),
     }).then(response => response.text());
   }
 
