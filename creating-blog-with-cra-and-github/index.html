@@ -1,0 +1,326 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><link href="/static/css/main.1b8a774e.css" rel="stylesheet"><title>Creating a blog with Create React App and GitHub · Blog · David Francisco</title></head><body><div id="root"><nav class="u-container Nav"><ul class="Nav-list"><li class="Nav-item"><a class="Nav-item-link" href="https://david.tools">Home</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://twitter.com/dmfrancisco">Twitter</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://github.com/dmfrancisco">GitHub</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://dribbble.com/davidfrancisco">Dribbble</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://instagram.com/dmfrancisco">Instagram</a></li><li class="Nav-item"><a class="Nav-item-link" href="mailto:hello@dmfranc.com">Email</a></li></ul></nav><article class="u-container Post"><header><a class="Posts-title Posts-title--header active" href="/" aria-current="true">Blog</a> <em class="Posts-info Posts-info--header">Feb 18, 2018 · 1 min read</em></header><div class="markdown-body"><h1><a class="anchor" href="#creating-a-blog-with-create-react-app-and-github" id="user-content-creating-a-blog-with-create-react-app-and-github" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a blog with Create React App and GitHub</h1><p><a href="https://github.com/facebook/create-react-app">Create React App</a> is a great tool that lets you start a new React application easily. There are some <a href="https://github.com/facebook/create-react-app#popular-alternatives">limitations though</a> that you need to be aware of:</p><ul><li><p>Your app is rendered entirely on the client. While usually search engines can run JavaScript, if your app is mostly static (for example, a blog) there are advantages in simply serving an HTML file rendered by a server.</p></li><li><p>You can have multiple HTML files but your JavaScript will only be injected into the <code>index.html</code> file. If you are creating a blog for example, you probably want a different <code>&lt;title></code> and Open Graph metatags for each post and, while you can do that with JavaScript using <a href="https://github.com/nfl/react-helmet">react-helmet</a>, my experience is that most platforms (like Twitter, Facebook and Slack) won't pick those, as they don't execute JavaScript.</p></li><li><p>If you are planning to deploy to GitHub Pages or a similar static hosting provider, keep in mind that if your client-side router uses the HTML5 pushState history API, your users may run into 404s on fresh page loads. <code>http://user.github.io/posts/hello-world</code> will make the GitHub Pages server search for a <code>posts/hello-world.html</code> file that doesn't exist. This is important for all sorts of apps, including blogs.</p></li></ul><p>So now that we're aware of the limitations, let's build a blog and try to address them.</p><div></div><h2><a class="anchor" href="#step-1-create-react-app-and-clean-up" id="user-content-step-1-create-react-app-and-clean-up" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 1: Create React App and clean up</h2><p>We begin with the regular boilerplate. Make sure you have recent versions of Node and NPM.</p><div class="highlight highlight-source-shell"><pre>npx create-react-app my-blog
+<span class="pl-c1">cd</span> my-blog
+npm start</pre></div><p>The app should now be running. Let's remove some of the generated files, including the <code>registerServiceWorker.js</code> file. Service Workers are great, but it's easy to run into problems if you're unexperienced with them. Remove and simplify everything until the <code>src</code> folder looks like this:</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> index.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span><span class="pl-smi"> ReactDOM</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span><span class="pl-smi"> App</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./App<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-s"><span class="pl-pds">"</span>./index.css<span class="pl-pds">"</span></span>;
+
+<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(&lt;<span class="pl-ent"><span class="pl-c1">App</span></span> />,<span class="pl-c1"> document</span><span class="pl-k">.</span><span class="pl-en">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span>));</pre></div><div class="highlight highlight-source-css"><pre><span class="pl-c"><span class="pl-c">/*</span> index.css <span class="pl-c">*/</span></span>
+
+<span class="pl-ent">body</span> {
+  <span class="pl-c1"><span class="pl-c1">margin</span></span>: <span class="pl-c1">0</span>;
+  <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">0</span>;
+  <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-c1">sans-serif</span>;
+}</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> App.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">export default</span> () <span class="pl-k">=></span> &lt;<span class="pl-ent">div</span> />;</pre></div><div></div><h2><a class="anchor" href="#step-2-add-a-router-and-some-basic-components" id="user-content-step-2-add-a-router-and-some-basic-components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 2: Add a router and some basic components</h2><p>Now we <code>npm install react-router-dom</code> so that we can have multiple pages. We will have one for the post listing and one per post.</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> App.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi"> BrowserRouter</span><span class="pl-k"> as</span><span class="pl-smi"> Router</span>,<span class="pl-smi"> Route</span>,<span class="pl-smi"> Switch</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">import</span><span class="pl-smi"> Posts</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./Posts<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span><span class="pl-smi"> Post</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./Post<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span><span class="pl-smi"> NotFound</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./NotFound<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span><span class="pl-smi"> data</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./data<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">export default</span> () <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent"><span class="pl-c1">Router</span></span>>
+    &lt;<span class="pl-ent"><span class="pl-c1">Switch</span></span>>
+      &lt;<span class="pl-ent"><span class="pl-c1">Route</span></span> <span class="pl-e">exact</span> <span class="pl-e">path</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">routeProps</span> <span class="pl-k">=></span> &lt;<span class="pl-ent"><span class="pl-c1">Posts</span></span> <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-k">...</span><span class="pl-smi">data</span></span><span class="pl-pse">}</span> /></span><span class="pl-pse">}</span> />
+
+      <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">entries</span>(<span class="pl-smi">data</span><span class="pl-k">.</span><span class="pl-smi">posts</span>)<span class="pl-k">.</span><span class="pl-en">map</span>(([<span class="pl-smi">slug</span>,<span class="pl-smi"> post</span>]) <span class="pl-k">=></span> (</span>
+<span class="pl-s1">        &lt;<span class="pl-ent"><span class="pl-c1">Route</span></span> </span>
+<span class="pl-s1">          <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">slug</span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">          <span class="pl-e">exact</span></span>
+<span class="pl-s1">          <span class="pl-e">path</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-s"><span class="pl-s">`</span><span class="pl-s">/<span class="pl-e">${<span class="pl-smi">slug</span>}</span></span><span class="pl-s">`</span></span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">          <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">({<span class="pl-smi"> match</span> }) <span class="pl-k">=></span> &lt;<span class="pl-ent"><span class="pl-c1">Post</span></span> <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-k">...</span><span class="pl-smi">post</span></span><span class="pl-pse">}</span> /></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">        /></span>
+<span class="pl-s1">      ))</span><span class="pl-pse">}</span>
+
+      &lt;<span class="pl-ent"><span class="pl-c1">Route</span></span> <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">routeProps</span> <span class="pl-k">=></span> &lt;<span class="pl-ent"><span class="pl-c1">NotFound</span></span> /></span><span class="pl-pse">}</span> />
+    &lt;/<span class="pl-ent"><span class="pl-c1">Switch</span></span>>
+  &lt;/<span class="pl-ent"><span class="pl-c1">Router</span></span>>
+);</pre></div><div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">/*</span> data.js <span class="pl-c">*/</span></span>
+
+<span class="pl-k">export</span> <span class="pl-c1">default</span> {
+  posts<span class="pl-k">:</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>creating-blog-with-cra-and-github<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+      date<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>2018-02-18<span class="pl-pds">"</span></span>,
+      title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Creating a blog with create-react-app and GitHub<span class="pl-pds">"</span></span>,
+      summary<span class="pl-k">:</span>
+        <span class="pl-s"><span class="pl-pds">"</span>Create React App is a great tool that lets you start a new React application very easily. There are some limitations though that you need to be aware of.<span class="pl-pds">"</span></span>,
+    },
+    <span class="pl-s"><span class="pl-pds">"</span>dear-hume<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+      date<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>1958-04-22<span class="pl-pds">"</span></span>,
+      title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Dear Hume<span class="pl-pds">"</span></span>,
+      summary<span class="pl-k">:</span>
+        <span class="pl-s"><span class="pl-pds">"</span>You ask advice: ah, what a very human and very dangerous thing to do! For to give advice to a man who asks what to do with his life implies something very close to egomania. To presume to point a man to the right and ultimate goal -- to point with a trembling finger in the right direction is something only a fool would take upon himself.<span class="pl-pds">"</span></span>,
+    },
+  },
+};</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> NotFound.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">export default</span> () <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+    The page you are looking for was moved, removed,
+    renamed or might never existed. &lt;<span class="pl-ent">br</span> />
+    &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Back to blog&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>>
+  &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+);</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Posts.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">export default</span> ({<span class="pl-smi"> posts</span> }) <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+    &lt;<span class="pl-ent">h1</span>>Blog&lt;/<span class="pl-ent">h1</span>>
+
+    &lt;<span class="pl-ent">ol</span>>
+      <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">entries</span>(<span class="pl-smi">posts</span>)<span class="pl-k">.</span><span class="pl-en">map</span>(([<span class="pl-smi">slug</span>,<span class="pl-smi"> post</span>]) <span class="pl-k">=></span> (</span>
+<span class="pl-s1">        &lt;<span class="pl-ent">li</span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">slug</span></span><span class="pl-pse">}</span>></span>
+<span class="pl-s1">          &lt;<span class="pl-ent">h2</span>></span>
+<span class="pl-s1">            &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">slug</span></span><span class="pl-pse">}</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">post</span><span class="pl-k">.</span><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>></span>
+<span class="pl-s1">          &lt;/<span class="pl-ent">h2</span>></span>
+<span class="pl-s1">          &lt;<span class="pl-ent">p</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">post</span><span class="pl-k">.</span><span class="pl-smi">summary</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">p</span>></span>
+<span class="pl-s1">          &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">post</span><span class="pl-k">.</span><span class="pl-smi">date</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>></span>
+<span class="pl-s1">        &lt;/<span class="pl-ent">li</span>></span>
+<span class="pl-s1">      ))</span><span class="pl-pse">}</span>
+    &lt;/<span class="pl-ent">ol</span>>
+  &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+);</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Post.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">export default</span> ({<span class="pl-smi"> date</span>,<span class="pl-smi"> title</span> }) <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+    &lt;<span class="pl-ent">h1</span>>
+      &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Blog&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>>
+    &lt;/<span class="pl-ent">h1</span>>
+    &lt;<span class="pl-ent">h2</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">h2</span>>
+    &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">date</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
+  &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+);</pre></div><div></div><h2><a class="anchor" href="#step-3-managing-the-document-head" id="user-content-step-3-managing-the-document-head" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 3: Managing the document head</h2><p>You should now be able to navigate through the example posts. Let's also <code>npm install react-helmet</code> to manage our <code>head</code> tags. We'll only use it for <code>&lt;title></code> but you may want to add Open Graph and Twitter tags too.</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> App.js</span>
+
+<span class="pl-md"><span class="pl-md">-</span>import React from "react";</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>import React, { Fragment } from "react";</span>
+ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+<span class="pl-mi1"><span class="pl-mi1">+</span>import { Helmet } from "react-helmet";</span>
+
+ import Posts from "./Posts";
+ import Post from "./Post";
+ import NotFound from "./NotFound";
+ import data from "./data";
+
+ export default () => (
+<span class="pl-mi1"><span class="pl-mi1">+</span>  &lt;Fragment></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;Helmet titleTemplate="%s | My Blog" /></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+     &lt;Router>
+       &lt;Switch>
+         &lt;Route exact path="/" render={routeProps => &lt;Posts {...data} />} />
+         ...
+         &lt;Route render={routeProps => &lt;NotFound {...data} />} />
+       &lt;/Switch>
+     &lt;/Router>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  &lt;/Fragment></span>
+ );</pre></div><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> NotFound.js</span>
+
+ import React, { Fragment } from "react";
+ import { NavLink } from "react-router-dom";
+<span class="pl-mi1"><span class="pl-mi1">+</span>import { Helmet } from "react-helmet";</span>
+
+ export default ({ nav }) => (
+   &lt;Fragment>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;Helmet></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>      &lt;title>404&lt;/title></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;/Helmet></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+     The page you are looking for was moved, removed,
+     renamed or might never existed. &lt;br />
+     &lt;NavLink to="/">Back to blog&lt;/NavLink>
+   &lt;/Fragment></pre></div><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> Posts.js</span>
+
+ import React, { Fragment } from "react";
+ import { NavLink } from "react-router-dom";
+<span class="pl-mi1"><span class="pl-mi1">+</span>import { Helmet } from "react-helmet";</span>
+
+ export default ({ posts }) => (
+   &lt;Fragment>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;Helmet></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>      &lt;title>Posts&lt;/title></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;/Helmet></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+     &lt;h1>Blog&lt;/h1>
+
+     &lt;ol></pre></div><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> Post.js</span>
+
+ import React, { Fragment } from "react";
+ import { NavLink } from "react-router-dom";
+<span class="pl-mi1"><span class="pl-mi1">+</span>import { Helmet } from "react-helmet";</span>
+
+ export default ({ gist, date, title, summary }) => (
+   &lt;Fragment>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;Helmet></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>      &lt;title>{title}&lt;/title></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;/Helmet></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+     &lt;h1>
+       &lt;NavLink to="/">Blog&lt;/NavLink>
+     &lt;/h1></pre></div><div></div><h2><a class="anchor" href="#step-4-fetching-and-rendering-markdown" id="user-content-step-4-fetching-and-rendering-markdown" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 4: Fetching and rendering Markdown</h2><p>I'm used to writing with Markdown. I'll also want syntax highlighting and basic styles for headings, images, lists, we are used to in GitHub readmes. Thankfully GitHub already does all of that and they offer an API, so let's use GitHub for:</p><ul><li>Writing and storing our posts using GitHub Gists</li><li>Retrieve posts and render them using the GitHub API</li><li>Use the stylesheet GitHub uses for rendering markdown files</li></ul><p>We <code>npm install github-markdown-css</code> and update our components accordingly:</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> data.js</span>
+
+ export default {
+   posts: {
+     "creating-blog-with-cra-and-github": {
+<span class="pl-mi1"><span class="pl-mi1">+</span>      gist: "f4f5311ad2ec25147bc458d791fdaeb5",</span>
+       date: "2018-02-18",
+       title: "Creating a blog with create-react-app and GitHub",
+       summary:
+         "Create React App is a great tool that lets you start a new React application very easily. There are some limitations though that you need to be aware of.",
+     },
+     "dear-hume": {
+<span class="pl-mi1"><span class="pl-mi1">+</span>      gist: "150ed6aa20f9b72ef3fcaf39ac2f89c6",</span>
+       date: "1958-04-22",
+       title: "Dear Hume",
+       summary:</pre></div><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> index.css</span>
+
+<span class="pl-mi1"><span class="pl-mi1">+</span>@import "~github-markdown-css";</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+ body {
+   margin: 0;
+   padding: 0;</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Post.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Component</span>,<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi"> Helmet</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-helmet<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">const</span> <span class="pl-smi">headers</span> <span class="pl-k">=</span> {<span class="pl-c1"> <span class="pl-s">Accept</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>application/vnd.github.v3.json<span class="pl-pds">"</span></span> };
+
+<span class="pl-k">export default</span> <span class="pl-k">class</span> <span class="pl-en">Post</span> <span class="pl-k">extends</span> <span class="pl-en">Component</span> {
+  <span class="pl-smi">state</span> <span class="pl-k">=</span> {
+<span class="pl-c1">    <span class="pl-s">content</span>:</span><span class="pl-c1"> null</span>,
+  };
+
+  <span class="pl-en">fetchData</span>() {
+<span class="pl-k">    return</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-en">fetchGistMarkdownUrl</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">gist</span>)
+      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">fetchGistMarkdownText</span>)
+      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">fetchRenderedMarkdown</span>);
+  }
+
+  <span class="pl-en">fetchGistMarkdownUrl</span>(<span class="pl-smi">id</span>) {
+<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-s">`</span><span class="pl-s">https://api.github.com/gists/<span class="pl-e">${<span class="pl-smi">id</span>}</span></span><span class="pl-s">`</span></span>, {<span class="pl-smi"> headers</span> })
+      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">json</span>())
+      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">json</span> <span class="pl-k">=></span><span class="pl-c1"> Object</span><span class="pl-k">.</span><span class="pl-en">values</span>(<span class="pl-smi">json</span><span class="pl-k">.</span><span class="pl-smi">files</span>)[<span class="pl-c1">0</span>]<span class="pl-k">.</span><span class="pl-smi">raw_url</span>);
+  }
+
+  <span class="pl-en">fetchGistMarkdownText</span>(<span class="pl-smi">rawUrl</span>) {
+<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-smi">rawUrl</span>)<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">text</span>());
+  }
+
+  <span class="pl-en">fetchRenderedMarkdown</span>(<span class="pl-smi">text</span>) {
+<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">"</span>https://api.github.com/markdown<span class="pl-pds">"</span></span>, {
+<span class="pl-smi">      headers</span>,
+<span class="pl-c1">      <span class="pl-s">method</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>POST<span class="pl-pds">"</span></span>,
+<span class="pl-c1">      <span class="pl-s">body</span>:</span> <span class="pl-smi">JSON</span><span class="pl-k">.</span><span class="pl-en">stringify</span>({<span class="pl-smi"> text</span> }),
+    })<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">text</span>());
+  }
+
+  <span class="pl-en">componentDidMount</span>() {
+<span class="pl-c1">    this</span><span class="pl-k">.</span><span class="pl-en">fetchData</span>()<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">content</span> <span class="pl-k">=></span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({<span class="pl-smi"> content</span> }));
+  }
+
+  <span class="pl-en">render</span>() {
+    <span class="pl-k">const</span> {<span class="pl-smi"> date</span>,<span class="pl-smi"> title</span> } <span class="pl-k">=</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span>;
+    <span class="pl-k">const</span> {<span class="pl-smi"> content</span> } <span class="pl-k">=</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span>;
+
+<span class="pl-k">    return</span> (
+      &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+        &lt;<span class="pl-ent"><span class="pl-c1">Helmet</span></span>>
+          &lt;<span class="pl-ent">title</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">title</span>>
+        &lt;/<span class="pl-ent"><span class="pl-c1">Helmet</span></span>>
+
+        &lt;<span class="pl-ent">h1</span>>
+          &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Blog&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>>
+        &lt;/<span class="pl-ent">h1</span>>
+        &lt;<span class="pl-ent">h2</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">h2</span>>
+        &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">date</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
+
+        &lt;<span class="pl-ent">div</span>
+          <span class="pl-e">className</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>markdown-body<span class="pl-pds">"</span></span>
+          <span class="pl-e">dangerouslySetInnerHTML</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">{<span class="pl-c1"> <span class="pl-s">__html</span>:</span><span class="pl-smi"> content</span> }</span><span class="pl-pse">}</span>
+        />
+      &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+    );
+  }
+}</pre></div><div></div><h2><a class="anchor" href="#step-5-deploying-to-github-pages" id="user-content-step-5-deploying-to-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 5: Deploying to GitHub Pages</h2><p>We are ready to deploy. I'll <code>npm install gh-pages</code> to deploy to GitHub Pages more easily.</p><div class="highlight highlight-source-diff"><pre> {
+   "name": "my-blog",
+<span class="pl-mi1"><span class="pl-mi1">+</span>  "homepage": "https://myusername.github.io/my-blog",</span>
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "gh-pages": "^1.1.0",</span>
+     "github-markdown-css": "^2.10.0",
+     ...
+   },
+   "scripts": {
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "predeploy": "npm run build",</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "deploy": "gh-pages -d build",</span>
+     "start": "react-scripts start",</pre></div><p>If you are not using a custom domain or this is a GitHub Page for projects (that lives under a scope, like <code>/my-blog</code>) you'll need to specify that in the router. We can use a custom env variable for that:</p><div class="highlight highlight-source-shell"><pre><span class="pl-c"><span class="pl-c">#</span> .env.production (in the root folder, the same as your package.json)</span>
+
+REACT_APP_BASENAME=<span class="pl-s"><span class="pl-pds">"</span>/my-blog<span class="pl-pds">"</span></span></pre></div><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> App.js</span>
+
+ &lt;Fragment>
+   &lt;Helmet titleTemplate="%s | My Blog" />
+ 
+<span class="pl-md"><span class="pl-md">-</span>  &lt;Router></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  &lt;Router basename={process.env.REACT_APP_BASENAME}></span>
+     &lt;Switch>
+       &lt;Route exact path="/" render={routeProps => &lt;Posts {...data} />} /></pre></div><p>Execute <code>npm run deploy</code> and your blog should now be live.</p><div></div><h2><a class="anchor" href="#step-6-pre-rendering-with-react-snap" id="user-content-step-6-pre-rendering-with-react-snap" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 6: Pre-rendering with React Snap</h2><p>It's time to address the limitations stated in the beginning of this post. There is an interesting project called React Snap that uses Puppeteer, a headless Chrome by the Google Chrome team, to pre-render an app like this into static HTML files.</p><p>Let's <code>npm install react-snap</code> and update our <code>package.json</code>:</p><div class="highlight highlight-source-diff"><pre>// package.json
+
+     "react-router-dom": "^4.2.2",
+<span class="pl-md"><span class="pl-md">-</span>    "react-scripts": "1.1.1"</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "react-scripts": "1.1.1",</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "react-snap": "^1.11.4"</span>
+   },
+   "scripts": {
+     "predeploy": "npm run build",
+     "deploy": "gh-pages -d build",
+     "start": "react-scripts start",
+<span class="pl-md"><span class="pl-md">-</span>    "build": "react-scripts build",</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "build": "react-scripts build && react-snap",</span>
+     "test": "react-scripts test --env=jsdom",
+     "eject": "react-scripts eject"
+   },
+<span class="pl-mi1"><span class="pl-mi1">+</span>  "reactSnap": {</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "waitFor": 1000,</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "preconnectThirdParty": false</span>
+   }
+ }</pre></div><p>This is great because it also solves the issue of using the HTML5 pushState history API, since we now have separate HTML files. Unrelated, but in case you need dynamic routes for an application, make sure to <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md">check the docs</a>, specifically the <a href="https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#notes-on-client-side-routing">section</a> that mentions the <a href="https://github.com/rafrex/spa-github-pages">spa-github-pages</a> project.</p><p>This also means we don't need JavaScript on the client anymore, so we can safely remove the scripts with:</p><div class="highlight highlight-source-diff"><pre>// package.json
+
+   "reactSnap": {
+     "waitFor": 1000,
+<span class="pl-md"><span class="pl-md">-</span>    "preconnectThirdParty": false</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "preconnectThirdParty": false,</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "removeScriptTags": true</span>
+   }
+ }</pre></div><p>Finally, just so you don't hit GitHub API rate limits, create a <a href="https://github.com/settings/tokens/new">personal token</a> without scopes and use it in your build:</p><div class="highlight highlight-source-shell"><pre><span class="pl-c"><span class="pl-c">#</span> .env.local (in the root folder, should be listed in .gitignore)</span>
+
+REACT_APP_ACCESS_TOKEN=<span class="pl-s"><span class="pl-pds">"</span>your-github-access-token<span class="pl-pds">"</span></span></pre></div><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> Post.js</span>
+
+ import React, { Component, Fragment } from "react";
+ import { NavLink } from "react-router-dom";
+ import { Helmet } from "react-helmet";
+<span class="pl-mi1"><span class="pl-mi1">+</span>import base64 from "base-64"; // Install this with `npm install base-64`</span>
+
+<span class="pl-md"><span class="pl-md">-</span>const headers = { Accept: "application/vnd.github.v3.json" };</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>const accessToken = process.env.REACT_APP_ACCESS_TOKEN;</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>const headers = {</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  Accept: "application/vnd.github.v3.json",</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  Authorization: `Basic ${base64.encode(accessToken + ":")}`,</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>};</span></pre></div><p>That's it! You now have a blog built with JavaScript that your users can read, even if they have JavaScript disabled.</p><p>If this setup is good enough for you, great! But be sure to read about <a href="https://www.gatsbyjs.org/" rel="nofollow">Gatsby</a>. It's probably a better solution for a blog and may help with other important features, like RSS.</p><p>Thank you for reading. Hope this was of any help<g-emoji class="g-emoji" alias="wave" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44b.png" ios-version="6.0">👋</g-emoji></p></div></article><div id="comments-root" data-gist="f4f5311ad2ec25147bc458d791fdaeb5"></div><div class="u-container"><a class="CommentLink" href="https://gist.github.com/f4f5311ad2ec25147bc458d791fdaeb5#comments">Write a comment on GitHub</a></div></div><script src="/static/js/main.ceb990f4.js" type="text/javascript"></script></body></html>
