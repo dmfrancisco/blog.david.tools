@@ -67,7 +67,7 @@ class Post extends Component {
             </NavLink>{" "}
             <em className="Posts-info Posts-info--header">
               {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")} ·{" "}
-              {readingTime("example").text}
+              {readingTime(content || "").text}
             </em>
           </header>
 

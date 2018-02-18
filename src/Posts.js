@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import readingTime from "reading-time";
 import fecha from "fecha";
 
 import Nav from "./Nav";
@@ -22,8 +21,7 @@ export default ({ nav, posts }) => (
             </h2>
             <p className="Posts-description">{post.summary}</p>
             <em className="Posts-info">
-              {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")} ·{" "}
-              {readingTime("example").text}
+              {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")}
             </em>
 
             <NavLink to={slug} hidden className="Posts-linkMask">
