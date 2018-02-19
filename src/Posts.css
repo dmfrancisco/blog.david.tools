@@ -1,9 +1,9 @@
 .Posts {
   list-style: none;
   padding: 0;
+  padding-bottom: 6rem;
   letter-spacing: -0.005em;
   hyphens: auto;
-  margin-bottom: 6rem;
 }
 
 .Posts-item {
