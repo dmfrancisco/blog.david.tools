@@ -12,6 +12,7 @@ import snapshot from "./snapshot";
 
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 const headers = { Authorization: `Basic ${base64.encode(accessToken + ":")}` };
+
 class Post extends Component {
   state = {
     content: null,

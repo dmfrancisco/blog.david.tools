@@ -3,6 +3,7 @@
   padding: 0;
   letter-spacing: -0.005em;
   hyphens: auto;
+  margin-bottom: 6rem;
 }
 
 .Posts-item {
@@ -29,10 +30,6 @@
   font-weight: bold;
   margin-bottom: 4rem;
   text-decoration: none;
-}
-
-.Posts-item:hover {
-  background: rgba(34, 38, 88, 0.03);
 }
 
 .Posts-linkMask {
@@ -71,4 +68,8 @@
 .Posts-info--header {
   display: block;
   margin-bottom: 1rem;
+}
+
+.Posts-older {
+  margin-top: 4rem;
 }

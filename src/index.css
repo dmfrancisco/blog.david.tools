@@ -8,6 +8,21 @@
 @import "./Comments.css";
 @import "./CommentLink.css";
 
+.u-btn {
+  background: rgba(73, 79, 161, 0.05);
+  border-radius: 2px;
+  color: inherit;
+  display: block;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+}
+
+.u-btn:hover {
+  background: rgba(34, 38, 88, 0.1);
+}
+
 .markdown-body {
   font-family: inherit;
   color: inherit;

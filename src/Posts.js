@@ -29,6 +29,12 @@ export default ({ nav, posts }) => (
             </NavLink>
           </li>
         ))}
+
+        <li>
+          <a className="Posts-older u-btn" href={`http://blog.dmfranc.com`}>
+            Older posts on Tumblr
+          </a>
+        </li>
       </ol>
     </section>
   </Fragment>
