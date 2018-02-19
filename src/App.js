@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
-import { Helmet } from "react-helmet";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import AppHelmet from "./AppHelmet";
 import Posts from "./Posts";
 import Post from "./Post";
 import NotFound from "./NotFound";
@@ -9,7 +9,7 @@ import data from "./data";
 
 export default () => (
   <Fragment>
-    <Helmet defaultTitle={data.helmet.title} titleTemplate={`%s · ${data.helmet.title}`} />
+    <AppHelmet {...data.helmet} />
 
     <Router>
       <Switch>

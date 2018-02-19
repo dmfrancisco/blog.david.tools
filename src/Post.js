@@ -1,10 +1,10 @@
 import React, { Fragment, Component } from "react";
-import { Helmet } from "react-helmet";
 import { NavLink } from "react-router-dom";
 import readingTime from "reading-time";
 import fecha from "fecha";
 import base64 from "base-64";
 
+import PostHelmet from "./PostHelmet";
 import Nav from "./Nav";
 import Comments from "./Comments";
 import CommentLink from "./CommentLink";
@@ -55,9 +55,7 @@ class Post extends Component {
 
     return (
       <Fragment>
-        <Helmet>
-          <title>{post.title}</title>
-        </Helmet>
+        <PostHelmet {...post} />
 
         <Nav items={nav} />
 

@@ -1,6 +1,10 @@
 export default {
   helmet: {
     title: "Blog · David Francisco",
+    author: "David Marquês Francisco",
+    twitter: "@dmfrancisco",
+    description: "Hello, I'm a web developer from Coimbra that focuses on front-end and design.",
+    publicUrl: "https://blog.david.tools",
   },
   nav: [
     {
