@@ -36,9 +36,15 @@ export default {
     "creating-blog-with-cra-and-github": {
       title: "Creating a blog with Create React App and GitHub",
       summary:
-        "There are great open source tools to generate static blogs, and Create React App can be one of them, if you add some tools to address some of its limitations.",
+        "There are great open source projects to generate static blogs, and Create React App can be one of them, if you add some tools to address some of its limitations.",
       date: "2018-02-18",
       gist: "f4f5311ad2ec25147bc458d791fdaeb5",
+    },
+    "hello-world": {
+      title: "Hello, World!",
+      summary: "Hello! And welcome to this blog. How are you today?",
+      date: "2017-08-16",
+      gist: "8a882e5dc6d8663e03451d7dfc9a9ecd",
     },
   },
 };
