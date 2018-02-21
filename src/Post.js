@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import readingTime from "reading-time";
 import fecha from "fecha";
 import base64 from "base-64";
+import convert from "htmr";
 
 import PostHelmet from "./PostHelmet";
 import Nav from "./Nav";
@@ -12,6 +13,13 @@ import snapshot from "./snapshot";
 
 const accessToken = process.env.REACT_APP_ACCESS_TOKEN;
 const headers = { Authorization: `Basic ${base64.encode(accessToken + ":")}` };
+
+const CustomPre = ({ children, ...props }) => {
+  if (props.lang === "render") {
+    return <p dangerouslySetInnerHTML={{ __html: children[0].props.children[0] }} />;
+  }
+  return <pre {...props}>{children}</pre>;
+};
 
 class Post extends Component {
   state = {
@@ -52,6 +60,14 @@ class Post extends Component {
   render() {
     const { nav, post } = this.props;
     const { content } = this.state;
+    let components;
+
+    if (post.convert) {
+      // Currently has some issues with escaping (for eg JSX in a in diff)
+      components = convert(content || "", {
+        map: { pre: CustomPre },
+      });
+    }
 
     return (
       <Fragment>
@@ -70,7 +86,11 @@ class Post extends Component {
             </em>
           </header>
 
-          <div className="markdown-body" dangerouslySetInnerHTML={{ __html: content }} />
+          {!post.convert ? (
+            <div className="markdown-body" dangerouslySetInnerHTML={{ __html: content }} />
+          ) : (
+            <div className="markdown-body">{components}</div>
+          )}
         </article>
 
         <div id="comments-root" data-gist={post.gist} />
