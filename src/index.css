@@ -23,6 +23,19 @@
   background: rgba(34, 38, 88, 0.1);
 }
 
+.u-video {
+  position: relative;
+  padding-bottom: 100%;
+}
+
+.u-video > iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .markdown-body {
   font-family: inherit;
   color: inherit;
