@@ -33,6 +33,14 @@ export default {
     },
   ],
   posts: {
+    "creating-blog-with-cra-and-github-pt": {
+      title: "Criar um blog com Create React App e GitHub 🇵🇹",
+      summary:
+        "Existem vários projectos de código aberto muito bons para criar blogs estáticos, e Create React App pode ser um deles, se lhe juntar ferramentas para resolver algumas das limitações.",
+      date: "2018-02-20",
+      gist: "ad8794fef22f015324161062fcdc2b41",
+      lang: "pt",
+    },
     "creating-blog-with-cra-and-github": {
       title: "Creating a blog with Create React App and GitHub",
       summary:
