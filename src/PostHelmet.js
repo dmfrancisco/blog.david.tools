@@ -1,9 +1,11 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 
-export default ({ title, summary }) => (
+export default ({ title, summary, lang }) => (
   <Helmet>
     <title>{title}</title>
+
+    {lang && <html lang={lang} />}
 
     <meta name="description" content={summary} />
 

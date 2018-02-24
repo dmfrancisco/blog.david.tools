@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 
 export default ({ title, description, author, twitter, publicUrl }) => (
   <Helmet defaultTitle={title} titleTemplate={`%s · ${title}`}>
+    <html lang="en" />
+
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/icon.png" />
 
