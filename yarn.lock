@@ -6546,6 +6546,10 @@ typeface-karla@^0.0.54:
   version "0.0.54"
   resolved "https://registry.yarnpkg.com/typeface-karla/-/typeface-karla-0.0.54.tgz#f59d09b329a378db2161a3ecd6e6a0054699b579"
 
+"typeface-karmilla@github:dmfrancisco/typeface-karmilla":
+  version "0.0.1"
+  resolved "https://codeload.github.com/dmfrancisco/typeface-karmilla/tar.gz/b75879c4bc942e0a9a3ec1c09a582944979642a2"
+
 ua-parser-js@^0.7.9:
   version "0.7.17"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.17.tgz#e9ec5f9498b9ec910e7ae3ac626a805c4d09ecac"

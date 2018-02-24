@@ -1,4 +1,4 @@
-@import "~typeface-karla";
+@import "~typeface-karmilla";
 @import "~david.tools/src/index.css";
 @import "~david.tools/src/Nav.css";
 @import "~david.tools/src/NotFound.css";
@@ -7,6 +7,10 @@
 @import "./Post.css";
 @import "./Comments.css";
 @import "./CommentLink.css";
+
+body {
+  font-family: Karmilla, sans-serif;
+}
 
 .u-btn {
   background: rgba(73, 79, 161, 0.05);
