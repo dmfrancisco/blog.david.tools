@@ -33,6 +33,13 @@ export default {
     },
   ],
   posts: {
+    "creating-blog-with-cra-and-github-2": {
+      title: "Blog with Create React App and GitHub: Adding comments",
+      summary:
+        "Last post we created a simple blog using Create React App and GitHub Gists. With Gists we can allow visitors to comment.",
+      date: "2018-02-25",
+      gist: "34d379919c0fb44eb800ad8beeae9b86",
+    },
     "creating-blog-with-cra-and-github-pt": {
       title: "Criar um blog com Create React App e GitHub 🇵🇹",
       summary:
