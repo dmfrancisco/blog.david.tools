@@ -1,0 +1,139 @@
+<!DOCTYPE html><html data-react-helmet="lang" lang="en"><head><meta charset="utf-8"><meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><link href="/static/css/main.90a62c5c.css" rel="stylesheet"><title>Blog with Create React App and GitHub: Adding comments · Blog · David Francisco</title><link href="/favicon.ico" rel="shortcut icon" data-react-helmet="true"><link href="/icon.png" rel="apple-touch-icon" data-react-helmet="true"><meta content="David Marquês Francisco" data-react-helmet="true" name="author"><meta content="https://blog.david.tools" data-react-helmet="true" property="og:url"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" property="og:image"><meta content="summary" data-react-helmet="true" name="twitter:card"><meta content="@dmfrancisco" data-react-helmet="true" name="twitter:creator"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" name="twitter:image"><meta content="Last post we created a simple blog using Create React App and GitHub Gists. With Gists we can allow visitors to comment." data-react-helmet="true" name="description"><meta content="Blog with Create React App and GitHub: Adding comments" data-react-helmet="true" property="og:title"><meta content="Last post we created a simple blog using Create React App and GitHub Gists. With Gists we can allow visitors to comment." data-react-helmet="true" property="og:description"><meta content="Blog with Create React App and GitHub: Adding comments" data-react-helmet="true" name="twitter:title"><meta content="Last post we created a simple blog using Create React App and GitHub Gists. With Gists we can allow visitors to comment." data-react-helmet="true" name="twitter:description"></head><body><div id="root"><nav class="u-container Nav"><ul class="Nav-list"><li class="Nav-item"><a class="Nav-item-link" href="https://david.tools">Home</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://twitter.com/dmfrancisco">Twitter</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://github.com/dmfrancisco">GitHub</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://dribbble.com/davidfrancisco">Dribbble</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://instagram.com/dmfrancisco">Instagram</a></li><li class="Nav-item"><a class="Nav-item-link" href="mailto:hello@dmfranc.com">Email</a></li></ul></nav><article class="u-container Post"><header><a class="Posts-title Posts-title--header active" href="/" aria-current="true">Blog</a> <em class="Posts-info Posts-info--header">Feb 25, 2018 · 6 min read</em></header><div class="markdown-body"><h1><a class="anchor" href="#blog-with-create-react-app-and-github-adding-comments" id="user-content-blog-with-create-react-app-and-github-adding-comments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Blog with Create React App and GitHub: Adding comments</h1><p><a href="https://blog.david.tools/creating-blog-with-cra-and-github/" rel="nofollow">Last post</a> we created a simple blog using Create React App and GitHub Gists. The main reason I chose Gists instead of a repository on GitHub was so I could also allow visitors to comment. This works for technical blogs like this one.</p><p>The blog is built before pushing and we ended up removing the code that would be run on the client. If we start showing comments however, we want those to be shown automatically, without the need to redeploy.</p><p>In this post I'll show one possible way to accomplish that.</p><h2><a class="anchor" href="#step-7-fetching-comments-using-the-github-api" id="user-content-step-7-fetching-comments-using-the-github-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 7: Fetching comments using the GitHub API</h2><p>We add a new component for Comments and update our Post component accordingly. The logic is similar to how we fetch the content itself. By setting the <code>Accept</code> header to <code>application/vnd.github.v3.html+json</code> we'll be able to get comments already rendered to HTML.</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> Post.js</span>
+
+ import { Helmet } from "react-helmet";
+ import base64 from "base-64";
+<span class="pl-mi1"><span class="pl-mi1">+</span>import Comments from "./Comments";</span>
+
+...
+   render() {
+<span class="pl-md"><span class="pl-md">-</span>    const { date, title } = this.props;</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    const { date, title, gist } = this.props;</span>
+     const { content } = this.state;
+...
+           className="markdown-body"
+           dangerouslySetInnerHTML={{ __html: content }}
+         />
+<span class="pl-mi1"><span class="pl-mi1">+</span>        &lt;Comments gist={gist} /></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>        &lt;a href={`https://gist.github.com/${gist}#comments`}></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>          Write a comment on GitHub</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>        &lt;/a></span>
+       &lt;/Fragment>
+     );
+   }</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Comment.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Component</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">const</span> <span class="pl-smi">headers</span> <span class="pl-k">=</span> {<span class="pl-c1"> <span class="pl-s">Accept</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>application/vnd.github.v3.html+json<span class="pl-pds">"</span></span> };
+
+<span class="pl-k">class</span> <span class="pl-en">Comments</span> <span class="pl-k">extends</span> <span class="pl-en">Component</span> {
+  <span class="pl-smi">state</span> <span class="pl-k">=</span> {
+<span class="pl-c1">    <span class="pl-s">comments</span>:</span> [],
+  };
+
+  <span class="pl-en">fetchGistComments</span>(<span class="pl-smi">id</span>) {
+<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-s">`</span><span class="pl-s">https://api.github.com/gists/<span class="pl-e">${<span class="pl-smi">id</span>}</span>/comments</span><span class="pl-s">`</span></span>, {
+<span class="pl-smi">      headers</span>,
+    })<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">json</span>());
+  }
+
+  <span class="pl-en">componentDidMount</span>() {
+<span class="pl-c1">    this</span><span class="pl-k">.</span><span class="pl-en">fetchGistComments</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">gist</span>)<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">comments</span> <span class="pl-k">=></span>
+<span class="pl-c1">      this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({<span class="pl-smi"> comments</span> })
+    );
+  }
+
+  <span class="pl-en">render</span>() {
+    <span class="pl-k">const</span> {<span class="pl-smi"> comments</span> } <span class="pl-k">=</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span>;
+
+<span class="pl-k">    if</span> (<span class="pl-smi">comments</span><span class="pl-k">.</span><span class="pl-smi">length</span><span class="pl-k"> ===</span> <span class="pl-c1">0</span>) {
+<span class="pl-k">      return</span><span class="pl-c1"> null</span>;
+    }
+
+<span class="pl-k">    return</span> (
+      &lt;<span class="pl-ent">section</span>>
+        &lt;<span class="pl-ent">h2</span>>Comments&lt;/<span class="pl-ent">h2</span>>
+
+        <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">comments</span><span class="pl-k">.</span><span class="pl-en">map</span>(<span class="pl-smi">comment</span> <span class="pl-k">=></span> (</span>
+<span class="pl-s1">          &lt;<span class="pl-ent">div</span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">comment</span><span class="pl-k">.</span><span class="pl-smi">id</span></span><span class="pl-pse">}</span>></span>
+<span class="pl-s1">            &lt;<span class="pl-ent">div</span>></span>
+<span class="pl-s1">              &lt;<span class="pl-ent">img</span></span>
+<span class="pl-s1">                <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-s"><span class="pl-s">`</span><span class="pl-s"><span class="pl-e">${<span class="pl-smi">comment</span><span class="pl-k">.</span><span class="pl-smi">user</span><span class="pl-k">.</span><span class="pl-smi">avatar_url</span>}</span>&size=40</span><span class="pl-s">`</span></span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">                <span class="pl-e">alt</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-s"><span class="pl-s">`</span><span class="pl-s"><span class="pl-e">${<span class="pl-smi">comment</span><span class="pl-k">.</span><span class="pl-smi">user</span><span class="pl-k">.</span><span class="pl-smi">login</span>}</span> avatar</span><span class="pl-s">`</span></span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">                <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">20</span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">              /><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">              &lt;<span class="pl-ent">a</span> <span class="pl-e">href</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">comment</span><span class="pl-k">.</span><span class="pl-smi">user</span><span class="pl-k">.</span><span class="pl-smi">html_url</span></span><span class="pl-pse">}</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">comment</span><span class="pl-k">.</span><span class="pl-smi">user</span><span class="pl-k">.</span><span class="pl-smi">login</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">a</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-s"><span class="pl-pds">"</span> <span class="pl-pds">"</span></span></span><span class="pl-pse">}</span></span>
+<span class="pl-s1">              &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">comment</span><span class="pl-k">.</span><span class="pl-smi">author_association</span><span class="pl-k"> ===</span> <span class="pl-s"><span class="pl-pds">"</span>OWNER<span class="pl-pds">"</span></span><span class="pl-k"> &&</span> <span class="pl-s"><span class="pl-pds">"</span>Author<span class="pl-pds">"</span></span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>></span>
+<span class="pl-s1">            &lt;/<span class="pl-ent">div</span>></span>
+<span class="pl-s1">            &lt;<span class="pl-ent">div</span></span>
+<span class="pl-s1">              <span class="pl-e">className</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>markdown-body<span class="pl-pds">"</span></span></span>
+<span class="pl-s1">              <span class="pl-e">dangerouslySetInnerHTML</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">{<span class="pl-c1"> <span class="pl-s">__html</span>:</span><span class="pl-smi"> comment</span><span class="pl-k">.</span><span class="pl-smi">body_html</span> }</span><span class="pl-pse">}</span></span>
+<span class="pl-s1">            /></span>
+<span class="pl-s1">          &lt;/<span class="pl-ent">div</span>></span>
+<span class="pl-s1">        ))</span><span class="pl-pse">}</span>
+      &lt;/<span class="pl-ent">section</span>>
+    );
+  }
+}
+
+<span class="pl-k">export default</span><span class="pl-smi"> Comments</span>;</pre></div><p>Let's also remove our custom React Snap config so that the scripts are not removed from the rendered files:</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> package.json</span>
+
+   "reactSnap": {
+     "waitFor": 1000,
+<span class="pl-md"><span class="pl-md">-</span>    "preconnectThirdParty": false,</span>
+<span class="pl-md"><span class="pl-md">-</span>    "removeScriptTags": true</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "preconnectThirdParty": false</span>
+   }</pre></div><h2><a class="anchor" href="#step-8-reducing-the-size-of-our-javascript-bundle" id="user-content-step-8-reducing-the-size-of-our-javascript-bundle" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Step 8: Reducing the size of our JavaScript bundle</h2><p>This works fine now but the visitors have to download all our JavaScript code simply to see the comments. This may not be something you're worried about, but there is a simple change we can do that can help with this.</p><p>Create React App supports code splitting using dynamic imports. To keep things simple we'll <code>npm install react-loadable</code> and separate the code that renders on the client from what runs on the server.</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> Post.js</span>
+
+<span class="pl-mi1"><span class="pl-mi1">+</span>import snapshot from "./snapshot";</span>
+ import Comments from "./Comments";
+
+...
+       dangerouslySetInnerHTML={{ __html: content }}
+     />
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    &lt;div id="comments-root" data-gist={gist} /></span>
+
+<span class="pl-md"><span class="pl-md">-</span>    &lt;Comments gist={gist} /></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>    {!snapshot && &lt;Comments gist={gist} />}</span>
+
+     &lt;a href={`https://gist.github.com/${gist}#comments`}>
+       Write a comment on GitHub</pre></div><div class="highlight highlight-source-diff"><pre>/* index.js */
+
+ import React from "react";
+ import ReactDOM from "react-dom";
+<span class="pl-md"><span class="pl-md">-</span>import App from "./App";</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>import Loadable from "react-loadable";</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>import snapshot from "./snapshot";</span>
+ import "./index.css";
+
+<span class="pl-md"><span class="pl-md">-</span>ReactDOM.render(&lt;App />, document.getElementById("root"));</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>const production = process.env.NODE_ENV === "production";</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>const LoadableApp = Loadable({</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  loader: () => import("./App"),</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  loading: () => &lt;div>Loading…&lt;/div>,</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>});</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>const LoadableComments = Loadable({</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  loader: () => import("./Comments"),</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  loading: () => &lt;div>Loading…&lt;/div>,</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>});</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span></span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>if (snapshot || !production) {</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  const el = document.getElementById("root");</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  ReactDOM.render(&lt;LoadableApp />, el);</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>} else {</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  const el = document.getElementById("comments-root");</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>  if (el) ReactDOM.render(&lt;LoadableComments gist={el.dataset.gist} />, el);</span>
+<span class="pl-mi1"><span class="pl-mi1">+</span>}</span></pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> snapshot.js<span class="pl-c"> */</span></span>
+
+<span class="pl-k">export default</span><span class="pl-smi"> navigator</span><span class="pl-k">.</span><span class="pl-smi">userAgent</span><span class="pl-k"> ===</span> <span class="pl-s"><span class="pl-pds">"</span>ReactSnap<span class="pl-pds">"</span></span>;</pre></div><p>With this change we will end up with 3 JavaScript files. There is a file called <code>main</code>, with the common code such as React, them there are two chunks, one for the App and another for the Comments. Because of this structure, only the main and comments chunks will be downloaded by the user.</p><p>While doing this for my own blog I noticed React Snap was injecting a preload tag that was forcing all the 3 chunks to be downloaded. I didn't find an option to disable this so I ended up adding a <code>postbuild</code> script to remove them:</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> package.json</span>
+
+     "deploy": "gh-pages -d build",
+     "start": "react-scripts start",
+     "build": "react-scripts build && react-snap",
+<span class="pl-mi1"><span class="pl-mi1">+</span>    "postbuild": "sed -i '' 's/&lt;link href=\"[^ ]*\" rel=\"preload\" as=\"script\">//g' $(find ./build -iname *.html)",</span>
+     "test": "react-scripts test --env=jsdom",
+     "eject": "react-scripts eject"</pre></div><p>That's it! This may be good enough for you but be sure to explore other more robust solutions, such as <a href="https://www.gatsbyjs.org/" rel="nofollow">Gatsby</a>.</p><p>Thank you for reading. Hope you learned something new<g-emoji class="g-emoji" alias="wave" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44b.png">👋</g-emoji></p></div></article><div id="comments-root" data-gist="34d379919c0fb44eb800ad8beeae9b86"></div><div class="u-container CommentLink"><a class="u-btn" href="https://gist.github.com/34d379919c0fb44eb800ad8beeae9b86#comments">Write a comment on GitHub</a></div></div><script src="/static/js/main.347a8acb.js" type="text/javascript"></script></body></html>
