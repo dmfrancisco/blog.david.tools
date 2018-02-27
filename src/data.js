@@ -33,6 +33,14 @@ export default {
     },
   ],
   posts: {
+    "next-react": {
+      title: "We're ready for the next React",
+      summary:
+        "I really enjoy developing with React and I use it for all sorts of projects. But we may need a paradigm shift to take our web interfaces to the next level.",
+      date: "2018-02-27",
+      gist: "32c3f0f3a4004b3cb36e6615ae4ba8ee",
+      convert: true,
+    },
     "creating-blog-with-cra-and-github-2": {
       title: "Blog with Create React App and GitHub: Adding comments",
       summary:
