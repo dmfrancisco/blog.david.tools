@@ -57,6 +57,14 @@ class Post extends Component {
     this.fetchData().then(content => this.setState({ content }));
   }
 
+  componentDidUpdate() {
+    if (!snapshot && window.twttr) {
+      try {
+        window.twttr.widgets.load();
+      } catch (e) {}
+    }
+  }
+
   render() {
     const { nav, post } = this.props;
     const { content } = this.state;
