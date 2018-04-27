@@ -24,7 +24,7 @@ export default ({ nav, posts }) => (
               {fecha.format(fecha.parse(post.date, "YYYY-MM-DD"), "mediumDate")}
             </em>
 
-            <NavLink to={slug} hidden className="Posts-linkMask">
+            <NavLink to={slug} className="Posts-linkMask" aria-hidden>
               {" "}
             </NavLink>
           </li>
