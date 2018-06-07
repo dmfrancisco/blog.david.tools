@@ -1791,7 +1791,7 @@ date-now@^0.1.4:
 
 david.tools@dmfrancisco/david.tools:
   version "0.1.0"
-  resolved "https://codeload.github.com/dmfrancisco/david.tools/tar.gz/fc3207174d6f38d76f0e841d6b37b31b2ea7eeee"
+  resolved "https://codeload.github.com/dmfrancisco/david.tools/tar.gz/fbc18c965d679c2e6dcd49340e37065279e757e6"
   dependencies:
     gh-pages "^1.1.0"
     react "^16.2.0"
