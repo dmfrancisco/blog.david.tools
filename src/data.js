@@ -33,6 +33,13 @@ export default {
     },
   ],
   posts: {
+    "forking-a-npm-package": {
+      title: "Forking a npm package",
+      summary:
+        "Whenever you want to fork a package's repository from GitHub and install with npm, but the dist files are missing, you can use a prepare script.",
+      date: "2018-03-01",
+      gist: "7aa5138ae1dbc5748c2994956907acd0",
+    },
     "next-react": {
       title: "We're ready for the next React",
       summary:
