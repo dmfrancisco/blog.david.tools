@@ -31,7 +31,7 @@ export default ({ nav, posts }) => (
         ))}
 
         <li>
-          <a className="Posts-older u-btn" href={`http://blog.dmfranc.com`}>
+          <a className="Posts-older u-btn" href="https://davidfrancisco.tumblr.com">
             Older posts on Tumblr
           </a>
         </li>
