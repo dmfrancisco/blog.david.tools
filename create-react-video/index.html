@@ -1,175 +1,175 @@
-<!DOCTYPE html><html data-react-helmet="lang" lang="en"><head><meta charset="utf-8"><meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><link href="/static/css/main.a2116599.css" rel="stylesheet"><title>Create React Video 🎥 · Blog · David Francisco</title><link href="/favicon.ico" rel="shortcut icon" data-react-helmet="true"><link href="/icon.png" rel="apple-touch-icon" data-react-helmet="true"><meta content="David Marquês Francisco" data-react-helmet="true" name="author"><meta content="https://blog.david.tools" data-react-helmet="true" property="og:url"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" property="og:image"><meta content="summary" data-react-helmet="true" name="twitter:card"><meta content="@dmfrancisco" data-react-helmet="true" name="twitter:creator"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" name="twitter:image"><meta content="I'm excited to share with you a side project I've been working on." data-react-helmet="true" name="description"><meta content="Create React Video 🎥" data-react-helmet="true" property="og:title"><meta content="I'm excited to share with you a side project I've been working on." data-react-helmet="true" property="og:description"><meta content="Create React Video 🎥" data-react-helmet="true" name="twitter:title"><meta content="I'm excited to share with you a side project I've been working on." data-react-helmet="true" name="twitter:description"></head><body><div id="root"><nav class="u-container Nav"><ul class="Nav-list"><li class="Nav-item"><a class="Nav-item-link" href="https://david.tools">Home</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://twitter.com/dmfrancisco">Twitter</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://github.com/dmfrancisco">GitHub</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://dribbble.com/davidfrancisco">Dribbble</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://instagram.com/dmfrancisco">Instagram</a></li><li class="Nav-item"><a class="Nav-item-link" href="mailto:hello@dmfranc.com">Email</a></li></ul></nav><article class="u-container Post"><header><a class="Posts-title Posts-title--header active" href="/" aria-current="true">Blog</a> <em class="Posts-info Posts-info--header">Aug 27, 2017 · 12 min read</em></header><div class="markdown-body"><h1><a class="anchor" href="#create-react-video-" id="user-content-create-react-video-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create React Video<g-emoji classname="g-emoji" alias="movie_camera" fallbacksrc="https://assets-cdn.github.com/images/icons/emoji/unicode/1f3a5.png">🎥</g-emoji></h1><p>I'm excited to share with you a side project I've been working on.</p><p>You may have seen those short informational videos on Facebook, such as this one by the <a href="https://facebook.com/worldeconomicforum/videos/10154714897226479/" rel="nofollow">World Economic Forum</a>.</p><p>I find it to be a very engaging way of presenting information. The visual components that are in the video are basic and can be mimicked with HTML and CSS. They are then reused along the video with different text.</p><p>Most video editing software has a lot of features that are not needed to accomplish this type of video. They usually have a bit of a learning curve and it's not always easy to reuse work between projects.</p><p>I decided to implement a way of coding videos using React by forking "Create React App", a project that makes it easy to develop a web page using React. While in Create React App running <code>yarn start</code> opens a browser tab that refreshes when you update your code, Create React Video opens a video player, built with Electron, that also reloads when you update the code.</p><p>Here's a very raw example video:</p><p></p><div class="u-video"><iframe src="https://player.vimeo.com/video/231239474?title=0&byline=0&portrait=0&color=7c4dff" width="760" height="760" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen></iframe></div><p></p><p>And here's the code to generate it:</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> ReactDOM</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-dom<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> Gideo</span>, {<span class="pl-smi"> Audio</span>,<span class="pl-smi"> Video</span>,<span class="pl-smi"> animatable</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>@robo54/gideo<span class="pl-pds">"</span></span>;
+<!DOCTYPE html><html data-react-helmet="lang" lang="en"><head><meta charset="utf-8"><meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><link href="/static/css/main.a2116599.css" rel="stylesheet"><title>Create React Video 🎥 · Blog · David Francisco</title><link href="/favicon.ico" rel="shortcut icon" data-react-helmet="true"><link href="/icon.png" rel="apple-touch-icon" data-react-helmet="true"><meta content="David Marquês Francisco" data-react-helmet="true" name="author"><meta content="https://blog.david.tools" data-react-helmet="true" property="og:url"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" property="og:image"><meta content="summary" data-react-helmet="true" name="twitter:card"><meta content="@dmfrancisco" data-react-helmet="true" name="twitter:creator"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" name="twitter:image"><meta content="I'm excited to share with you a side project I've been working on." data-react-helmet="true" name="description"><meta content="Create React Video 🎥" data-react-helmet="true" property="og:title"><meta content="I'm excited to share with you a side project I've been working on." data-react-helmet="true" property="og:description"><meta content="Create React Video 🎥" data-react-helmet="true" name="twitter:title"><meta content="I'm excited to share with you a side project I've been working on." data-react-helmet="true" name="twitter:description"></head><body><div id="root"><nav class="u-container Nav"><ul class="Nav-list"><li class="Nav-item"><a class="Nav-item-link" href="https://david.tools">Home</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://twitter.com/dmfrancisco">Twitter</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://github.com/dmfrancisco">GitHub</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://dribbble.com/davidfrancisco">Dribbble</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://instagram.com/dmfrancisco">Instagram</a></li><li class="Nav-item"><a class="Nav-item-link" href="mailto:hello@dmfranc.com">Email</a></li></ul></nav><article class="u-container Post"><header><a class="Posts-title Posts-title--header active" href="/" aria-current="true">Blog</a> <em class="Posts-info Posts-info--header">Aug 27, 2017 · 11 min read</em></header><div class="markdown-body"><h1><a class="anchor" href="#create-react-video-" id="user-content-create-react-video-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Create React Video<g-emoji classname="g-emoji" alias="movie_camera" fallbacksrc="https://github.githubassets.com/images/icons/emoji/unicode/1f3a5.png">🎥</g-emoji></h1><p>I'm excited to share with you a side project I've been working on.</p><p>You may have seen those short informational videos on Facebook, such as this one by the <a href="https://facebook.com/worldeconomicforum/videos/10154714897226479/" rel="nofollow">World Economic Forum</a>.</p><p>I find it to be a very engaging way of presenting information. The visual components that are in the video are basic and can be mimicked with HTML and CSS. They are then reused along the video with different text.</p><p>Most video editing software has a lot of features that are not needed to accomplish this type of video. They usually have a bit of a learning curve and it's not always easy to reuse work between projects.</p><p>I decided to implement a way of coding videos using React by forking "Create React App", a project that makes it easy to develop a web page using React. While in Create React App running <code>yarn start</code> opens a browser tab that refreshes when you update your code, Create React Video opens a video player, built with Electron, that also reloads when you update the code.</p><p>Here's a very raw example video:</p><p></p><div class="u-video"><iframe src="https://player.vimeo.com/video/231239474?title=0&byline=0&portrait=0&color=7c4dff" width="760" height="760" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen></iframe></div><p></p><p>And here's the code to generate it:</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-k">import</span> <span class="pl-smi">React</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">ReactDOM</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">Gideo</span>, { <span class="pl-smi">Audio</span>, <span class="pl-smi">Video</span>, <span class="pl-smi">animatable</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>@robo54/gideo<span class="pl-pds">"</span></span>;
 <span class="pl-k">import</span> <span class="pl-s"><span class="pl-pds">"</span>typeface-montserrat<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> locationIcon</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./location.svg<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">locationIcon</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./location.svg<span class="pl-pds">"</span></span>;
 
 <span class="pl-k">const</span> <span class="pl-smi">colors</span> <span class="pl-k">=</span> {
-<span class="pl-c1">  <span class="pl-s">primary</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>#7c4dff<span class="pl-pds">"</span></span>,
-<span class="pl-c1">  <span class="pl-s">black</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>#1a1f21<span class="pl-pds">"</span></span>,
-<span class="pl-c1">  <span class="pl-s">white</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>#fff<span class="pl-pds">"</span></span>
+  <span class="pl-c1"><span class="pl-s">primary</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>#7c4dff<span class="pl-pds">"</span></span>,
+  <span class="pl-c1"><span class="pl-s">black</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>#1a1f21<span class="pl-pds">"</span></span>,
+  <span class="pl-c1"><span class="pl-s">white</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>#fff<span class="pl-pds">"</span></span>
 };
 
 <span class="pl-k">const</span> <span class="pl-en">Border</span> <span class="pl-k">=</span> <span class="pl-smi">props</span> <span class="pl-k">=></span> {
   <span class="pl-k">const</span> <span class="pl-smi">style</span> <span class="pl-k">=</span> {
-<span class="pl-c1">    <span class="pl-s">border</span>:</span><span class="pl-s"> <span class="pl-s">`</span><span class="pl-s">15px solid <span class="pl-e">${<span class="pl-smi">colors</span><span class="pl-k">.</span><span class="pl-smi">primary</span>}</span></span><span class="pl-s">`</span></span>,
-<span class="pl-c1">    <span class="pl-s">height</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>,
-<span class="pl-c1">    <span class="pl-s">pointerEvents</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>none<span class="pl-pds">"</span></span>,
-<span class="pl-c1">    <span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
-<span class="pl-c1">    <span class="pl-s">width</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>,
-<span class="pl-c1">    <span class="pl-s">zIndex</span>:</span> <span class="pl-c1">100</span>
+    <span class="pl-c1"><span class="pl-s">border</span>:</span> <span class="pl-k">`</span><span class="pl-s">15px solid </span><span class="pl-k">${</span><span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">primary</span><span class="pl-k">}</span><span class="pl-k">`</span>,
+    <span class="pl-c1"><span class="pl-s">height</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>,
+    <span class="pl-c1"><span class="pl-s">pointerEvents</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>none<span class="pl-pds">"</span></span>,
+    <span class="pl-c1"><span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
+    <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>,
+    <span class="pl-c1"><span class="pl-s">zIndex</span>:</span> <span class="pl-c1">100</span>
   };
 
-<span class="pl-k">  return</span> (
-    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span></span><span class="pl-pse">}</span>>
-      <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">children</span></span><span class="pl-pse">}</span>
+  <span class="pl-k">return</span> (
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">style</span><span class="pl-pse">}</span>>
+      <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">children</span><span class="pl-pse">}</span>
     &lt;/<span class="pl-ent">div</span>>
   );
 };
 
 <span class="pl-k">const</span> <span class="pl-en">PaddedText</span> <span class="pl-k">=</span> <span class="pl-smi">props</span> <span class="pl-k">=></span> {
-  <span class="pl-k">const</span> {<span class="pl-smi"> spacing</span>,<span class="pl-smi"> style</span>,<span class="pl-k"> ...</span><span class="pl-smi">otherProps</span> } <span class="pl-k">=</span><span class="pl-smi"> props</span>;
+  <span class="pl-k">const</span> { <span class="pl-smi">spacing</span>, <span class="pl-smi">style</span>, <span class="pl-k">...</span><span class="pl-smi">otherProps</span> } <span class="pl-k">=</span> <span class="pl-smi">props</span>;
 
-<span class="pl-k">  if</span> (<span class="pl-smi">spacing</span><span class="pl-k"> &&</span><span class="pl-smi"> style</span><span class="pl-k">.</span><span class="pl-smi">background</span>) {
-<span class="pl-smi">    style</span><span class="pl-k">.</span><span class="pl-smi">paddingTop</span><span class="pl-k"> =</span><span class="pl-smi"> spacing</span><span class="pl-k"> *</span> <span class="pl-c1">0.6</span>;
-<span class="pl-smi">    style</span><span class="pl-k">.</span><span class="pl-smi">paddingBottom</span><span class="pl-k"> =</span><span class="pl-smi"> spacing</span><span class="pl-k"> *</span> <span class="pl-c1">0.6</span>;
-<span class="pl-smi">    style</span><span class="pl-k">.</span><span class="pl-smi">boxShadow</span><span class="pl-k"> =</span><span class="pl-s"> <span class="pl-s">`</span><span class="pl-s"><span class="pl-e">${<span class="pl-smi">spacing</span>}</span>px 0 0 <span class="pl-e">${<span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">background</span>}</span>,</span></span>
-<span class="pl-s"><span class="pl-s">      -<span class="pl-e">${<span class="pl-smi">spacing</span>}</span>px 0 0 <span class="pl-e">${<span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">background</span>}</span></span><span class="pl-s">`</span></span>;
+  <span class="pl-k">if</span> (<span class="pl-smi">spacing</span> <span class="pl-k">&&</span> <span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">background</span>) {
+    <span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">paddingTop</span> <span class="pl-k">=</span> <span class="pl-smi">spacing</span> <span class="pl-k">*</span> <span class="pl-c1">0.6</span>;
+    <span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">paddingBottom</span> <span class="pl-k">=</span> <span class="pl-smi">spacing</span> <span class="pl-k">*</span> <span class="pl-c1">0.6</span>;
+    <span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">boxShadow</span> <span class="pl-k">=</span> <span class="pl-k">`</span><span class="pl-k">${</span><span class="pl-smi">spacing</span><span class="pl-k">}</span><span class="pl-s">px 0 0 </span><span class="pl-k">${</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">background</span><span class="pl-k">}</span><span class="pl-s">,</span>
+<span class="pl-s">      -</span><span class="pl-k">${</span><span class="pl-smi">spacing</span><span class="pl-k">}</span><span class="pl-s">px 0 0 </span><span class="pl-k">${</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">background</span><span class="pl-k">}</span><span class="pl-k">`</span>;
   }
 
-<span class="pl-k">  return</span> (
-    &lt;<span class="pl-ent">span</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">assign</span>(<span class="pl-smi">style</span>,<span class="pl-smi"> props</span><span class="pl-k">.</span><span class="pl-smi">style</span>)</span><span class="pl-pse">}</span> <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-k">...</span><span class="pl-smi">otherProps</span></span><span class="pl-pse">}</span>>
-      <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">children</span></span><span class="pl-pse">}</span>
+  <span class="pl-k">return</span> (
+    &lt;<span class="pl-ent">span</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">assign</span>(<span class="pl-smi">style</span>, <span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">style</span>)<span class="pl-pse">}</span> <span class="pl-pse">{</span><span class="pl-k">...</span><span class="pl-smi">otherProps</span><span class="pl-pse">}</span>>
+      <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">children</span><span class="pl-pse">}</span>
     &lt;/<span class="pl-ent">span</span>>
   );
 };
 
-<span class="pl-k">const</span> <span class="pl-smi">OpeningText</span><span class="pl-k"> =</span> <span class="pl-en">animatable</span>(<span class="pl-smi">props</span> <span class="pl-k">=></span> {
+<span class="pl-k">const</span> <span class="pl-smi">OpeningText</span> <span class="pl-k">=</span> <span class="pl-en">animatable</span>(<span class="pl-smi">props</span> <span class="pl-k">=></span> {
   <span class="pl-k">const</span> <span class="pl-smi">style</span> <span class="pl-k">=</span> {
-<span class="pl-c1">    <span class="pl-s">container</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">alignItems</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">bottom</span>:</span> <span class="pl-c1">0</span>,
-<span class="pl-c1">      <span class="pl-s">display</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>flex<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">justifyContent</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">left</span>:</span><span class="pl-s"> <span class="pl-s">`</span><span class="pl-s"><span class="pl-e">${<span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">animate</span>(<span class="pl-c1">100</span>, <span class="pl-c1">0</span>, {</span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e"><span class="pl-c1">        <span class="pl-s">duration</span>:</span> <span class="pl-c1">2</span>,</span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e"><span class="pl-c1">        <span class="pl-s">easing</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>easeOutQuart<span class="pl-pds">"</span></span></span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e">      })}</span>%</span><span class="pl-s">`</span></span>,
-<span class="pl-c1">      <span class="pl-s">overflow</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>hidden<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">right</span>:</span> <span class="pl-c1">0</span>,
-<span class="pl-c1">      <span class="pl-s">top</span>:</span> <span class="pl-c1">0</span>
+    <span class="pl-c1"><span class="pl-s">container</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">alignItems</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">bottom</span>:</span> <span class="pl-c1">0</span>,
+      <span class="pl-c1"><span class="pl-s">display</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>flex<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">justifyContent</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">left</span>:</span> <span class="pl-k">`</span><span class="pl-k">${</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-en">animate</span>(<span class="pl-c1">100</span>, <span class="pl-c1">0</span>, {
+        <span class="pl-c1"><span class="pl-s">duration</span>:</span> <span class="pl-c1">2</span>,
+        <span class="pl-c1"><span class="pl-s">easing</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>easeOutQuart<span class="pl-pds">"</span></span>
+      })<span class="pl-k">}</span><span class="pl-s">%</span><span class="pl-k">`</span>,
+      <span class="pl-c1"><span class="pl-s">overflow</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>hidden<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">right</span>:</span> <span class="pl-c1">0</span>,
+      <span class="pl-c1"><span class="pl-s">top</span>:</span> <span class="pl-c1">0</span>
     },
-<span class="pl-c1">    <span class="pl-s">content</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">width</span>:</span><span class="pl-smi"> props</span><span class="pl-k">.</span><span class="pl-smi">width</span>
+    <span class="pl-c1"><span class="pl-s">content</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">width</span>
     },
-<span class="pl-c1">    <span class="pl-s">text</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">background</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">white</span>,
-<span class="pl-c1">      <span class="pl-s">fontSize</span>:</span> <span class="pl-c1">46</span>,
-<span class="pl-c1">      <span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.25</span>
+    <span class="pl-c1"><span class="pl-s">text</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">background</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">white</span>,
+      <span class="pl-c1"><span class="pl-s">fontSize</span>:</span> <span class="pl-c1">46</span>,
+      <span class="pl-c1"><span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.25</span>
     }
   };
 
-<span class="pl-k">  return</span> (
-    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">container</span></span><span class="pl-pse">}</span>>
-      &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">content</span></span><span class="pl-pse">}</span>>
-        &lt;<span class="pl-ent"><span class="pl-c1">PaddedText</span></span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">10</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">text</span></span><span class="pl-pse">}</span>>
-          <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">children</span></span><span class="pl-pse">}</span>
-        &lt;/<span class="pl-ent"><span class="pl-c1">PaddedText</span></span>>
+  <span class="pl-k">return</span> (
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">container</span><span class="pl-pse">}</span>>
+      &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">content</span><span class="pl-pse">}</span>>
+        &lt;<span class="pl-ent">PaddedText</span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">10</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">text</span><span class="pl-pse">}</span>>
+          <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">children</span><span class="pl-pse">}</span>
+        &lt;/<span class="pl-ent">PaddedText</span>>
       &lt;/<span class="pl-ent">div</span>>
     &lt;/<span class="pl-ent">div</span>>
   );
 });
 
-<span class="pl-k">const</span> <span class="pl-smi">StepText</span><span class="pl-k"> =</span> <span class="pl-en">animatable</span>(<span class="pl-smi">props</span> <span class="pl-k">=></span> {
-  <span class="pl-k">const</span> <span class="pl-smi">counterSize</span><span class="pl-k"> =</span> <span class="pl-c1">55</span>;
+<span class="pl-k">const</span> <span class="pl-smi">StepText</span> <span class="pl-k">=</span> <span class="pl-en">animatable</span>(<span class="pl-smi">props</span> <span class="pl-k">=></span> {
+  <span class="pl-k">const</span> <span class="pl-smi">counterSize</span> <span class="pl-k">=</span> <span class="pl-c1">55</span>;
   <span class="pl-k">const</span> <span class="pl-smi">style</span> <span class="pl-k">=</span> {
-<span class="pl-c1">    <span class="pl-s">main</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">alignItems</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">display</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>flex<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">height</span>:</span><span class="pl-smi"> props</span><span class="pl-k">.</span><span class="pl-smi">height</span>,
-<span class="pl-c1">      <span class="pl-s">margin</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>0 auto<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">width</span>:</span><span class="pl-smi"> props</span><span class="pl-k">.</span><span class="pl-smi">width</span><span class="pl-k"> +</span><span class="pl-smi"> counterSize</span><span class="pl-k"> +</span> <span class="pl-c1">15</span>
+    <span class="pl-c1"><span class="pl-s">main</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">alignItems</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">display</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>flex<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">height</span>:</span> <span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">height</span>,
+      <span class="pl-c1"><span class="pl-s">margin</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>0 auto<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">width</span> <span class="pl-k">+</span> <span class="pl-smi">counterSize</span> <span class="pl-k">+</span> <span class="pl-c1">15</span>
     },
-<span class="pl-c1">    <span class="pl-s">wrapper</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">width</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>
+    <span class="pl-c1"><span class="pl-s">wrapper</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>
     },
-<span class="pl-c1">    <span class="pl-s">counter</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">background</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">primary</span>,
-<span class="pl-c1">      <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">white</span>,
-<span class="pl-c1">      <span class="pl-s">float</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>left<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">fontFamily</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>Montserrat<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">fontSize</span>:</span> <span class="pl-c1">42</span>,
-<span class="pl-c1">      <span class="pl-s">fontWeight</span>:</span> <span class="pl-c1">600</span>,
-<span class="pl-c1">      <span class="pl-s">height</span>:</span><span class="pl-smi"> counterSize</span>,
-<span class="pl-c1">      <span class="pl-s">lineHeight</span>:</span><span class="pl-s"> <span class="pl-s">`</span><span class="pl-s"><span class="pl-e">${<span class="pl-smi">counterSize</span>}</span>px</span><span class="pl-s">`</span></span>,
-<span class="pl-c1">      <span class="pl-s">paddingBottom</span>:</span> <span class="pl-c1">2</span>,
-<span class="pl-c1">      <span class="pl-s">textAlign</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">transformOrigin</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>top right<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">transform</span>:</span><span class="pl-s"> <span class="pl-s">`</span><span class="pl-s">scale(<span class="pl-e">${<span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">animate</span>(<span class="pl-c1">0</span>, <span class="pl-c1">1</span>, {</span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e"><span class="pl-c1">        <span class="pl-s">duration</span>:</span> <span class="pl-c1">0.5</span>,</span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e"><span class="pl-c1">        <span class="pl-s">easing</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>easeOutSine<span class="pl-pds">"</span></span></span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e">      })}</span>)</span><span class="pl-s">`</span></span>,
-<span class="pl-c1">      <span class="pl-s">width</span>:</span><span class="pl-smi"> counterSize</span>
+    <span class="pl-c1"><span class="pl-s">counter</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">background</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">primary</span>,
+      <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">white</span>,
+      <span class="pl-c1"><span class="pl-s">float</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>left<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">fontFamily</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>Montserrat<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">fontSize</span>:</span> <span class="pl-c1">42</span>,
+      <span class="pl-c1"><span class="pl-s">fontWeight</span>:</span> <span class="pl-c1">600</span>,
+      <span class="pl-c1"><span class="pl-s">height</span>:</span> <span class="pl-smi">counterSize</span>,
+      <span class="pl-c1"><span class="pl-s">lineHeight</span>:</span> <span class="pl-k">`</span><span class="pl-k">${</span><span class="pl-smi">counterSize</span><span class="pl-k">}</span><span class="pl-s">px</span><span class="pl-k">`</span>,
+      <span class="pl-c1"><span class="pl-s">paddingBottom</span>:</span> <span class="pl-c1">2</span>,
+      <span class="pl-c1"><span class="pl-s">textAlign</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>center<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">transformOrigin</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>top right<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">transform</span>:</span> <span class="pl-k">`</span><span class="pl-s">scale(</span><span class="pl-k">${</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-en">animate</span>(<span class="pl-c1">0</span>, <span class="pl-c1">1</span>, {
+        <span class="pl-c1"><span class="pl-s">duration</span>:</span> <span class="pl-c1">0.5</span>,
+        <span class="pl-c1"><span class="pl-s">easing</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>easeOutSine<span class="pl-pds">"</span></span>
+      })<span class="pl-k">}</span><span class="pl-s">)</span><span class="pl-k">`</span>,
+      <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-smi">counterSize</span>
     },
-<span class="pl-c1">    <span class="pl-s">container</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">marginLeft</span>:</span><span class="pl-smi"> counterSize</span>,
-<span class="pl-c1">      <span class="pl-s">overflow</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>hidden<span class="pl-pds">"</span></span>
+    <span class="pl-c1"><span class="pl-s">container</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">marginLeft</span>:</span> <span class="pl-smi">counterSize</span>,
+      <span class="pl-c1"><span class="pl-s">overflow</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>hidden<span class="pl-pds">"</span></span>
     },
-<span class="pl-c1">    <span class="pl-s">content</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">marginLeft</span>:</span><span class="pl-s"> <span class="pl-s">`</span><span class="pl-s"><span class="pl-e">${<span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-en">animate</span>(<span class="pl-k">-</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">width</span>, <span class="pl-c1">0</span>, {</span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e"><span class="pl-c1">        <span class="pl-s">duration</span>:</span> <span class="pl-c1">1</span>,</span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e"><span class="pl-c1">        <span class="pl-s">easing</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>easeOutSine<span class="pl-pds">"</span></span></span></span></span>
-<span class="pl-s"><span class="pl-s"><span class="pl-e">      })}</span>px</span><span class="pl-s">`</span></span>,
-<span class="pl-c1">      <span class="pl-s">paddingLeft</span>:</span> <span class="pl-c1">10</span>,
-<span class="pl-c1">      <span class="pl-s">width</span>:</span><span class="pl-smi"> props</span><span class="pl-k">.</span><span class="pl-smi">width</span>
+    <span class="pl-c1"><span class="pl-s">content</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">marginLeft</span>:</span> <span class="pl-k">`</span><span class="pl-k">${</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-en">animate</span>(<span class="pl-k">-</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">width</span>, <span class="pl-c1">0</span>, {
+        <span class="pl-c1"><span class="pl-s">duration</span>:</span> <span class="pl-c1">1</span>,
+        <span class="pl-c1"><span class="pl-s">easing</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>easeOutSine<span class="pl-pds">"</span></span>
+      })<span class="pl-k">}</span><span class="pl-s">px</span><span class="pl-k">`</span>,
+      <span class="pl-c1"><span class="pl-s">paddingLeft</span>:</span> <span class="pl-c1">10</span>,
+      <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">width</span>
     },
-<span class="pl-c1">    <span class="pl-s">text</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">background</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">white</span>,
-<span class="pl-c1">      <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">black</span>,
-<span class="pl-c1">      <span class="pl-s">fontSize</span>:</span> <span class="pl-c1">25</span>,
-<span class="pl-c1">      <span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.4</span>
+    <span class="pl-c1"><span class="pl-s">text</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">background</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">white</span>,
+      <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">black</span>,
+      <span class="pl-c1"><span class="pl-s">fontSize</span>:</span> <span class="pl-c1">25</span>,
+      <span class="pl-c1"><span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.4</span>
     },
-<span class="pl-c1">    <span class="pl-s">name</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">background</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">black</span>,
-<span class="pl-c1">      <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">white</span>,
-<span class="pl-c1">      <span class="pl-s">fontSize</span>:</span> <span class="pl-c1">27</span>,
-<span class="pl-c1">      <span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.7</span>,
-<span class="pl-c1">      <span class="pl-s">marginRight</span>:</span> <span class="pl-c1">20</span>
+    <span class="pl-c1"><span class="pl-s">name</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">background</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">black</span>,
+      <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">white</span>,
+      <span class="pl-c1"><span class="pl-s">fontSize</span>:</span> <span class="pl-c1">27</span>,
+      <span class="pl-c1"><span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.7</span>,
+      <span class="pl-c1"><span class="pl-s">marginRight</span>:</span> <span class="pl-c1">20</span>
     },
-<span class="pl-c1">    <span class="pl-s">location</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">white</span>,
-<span class="pl-c1">      <span class="pl-s">fontSize</span>:</span> <span class="pl-c1">22</span>,
-<span class="pl-c1">      <span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.4</span>,
-<span class="pl-c1">      <span class="pl-s">opacity</span>:</span> <span class="pl-c1">0.7</span>,
-<span class="pl-c1">      <span class="pl-s">textShadow</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>0 1px 2px rgba(0,0,0,.5)<span class="pl-pds">"</span></span>
+    <span class="pl-c1"><span class="pl-s">location</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">white</span>,
+      <span class="pl-c1"><span class="pl-s">fontSize</span>:</span> <span class="pl-c1">22</span>,
+      <span class="pl-c1"><span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.4</span>,
+      <span class="pl-c1"><span class="pl-s">opacity</span>:</span> <span class="pl-c1">0.7</span>,
+      <span class="pl-c1"><span class="pl-s">textShadow</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>0 1px 2px rgba(0,0,0,.5)<span class="pl-pds">"</span></span>
     },
-<span class="pl-c1">    <span class="pl-s">locationIcon</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">marginRight</span>:</span> <span class="pl-c1">4</span>,
-<span class="pl-c1">      <span class="pl-s">width</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>1rem<span class="pl-pds">"</span></span>
+    <span class="pl-c1"><span class="pl-s">locationIcon</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">marginRight</span>:</span> <span class="pl-c1">4</span>,
+      <span class="pl-c1"><span class="pl-s">width</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>1rem<span class="pl-pds">"</span></span>
     }
   };
 
-<span class="pl-k">  return</span> (
-    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">main</span></span><span class="pl-pse">}</span>>
-      &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">wrapper</span></span><span class="pl-pse">}</span>>
-        &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">counter</span></span><span class="pl-pse">}</span>>
-          <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">counter</span></span><span class="pl-pse">}</span>
+  <span class="pl-k">return</span> (
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">main</span><span class="pl-pse">}</span>>
+      &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">wrapper</span><span class="pl-pse">}</span>>
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">counter</span><span class="pl-pse">}</span>>
+          <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">counter</span><span class="pl-pse">}</span>
         &lt;/<span class="pl-ent">div</span>>
-        &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">container</span></span><span class="pl-pse">}</span>>
-          &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">content</span></span><span class="pl-pse">}</span>>
-            &lt;<span class="pl-ent"><span class="pl-c1">PaddedText</span></span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">10</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span>>
-              <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">name</span></span><span class="pl-pse">}</span>
-            &lt;/<span class="pl-ent"><span class="pl-c1">PaddedText</span></span>>
-            &lt;<span class="pl-ent"><span class="pl-c1">PaddedText</span></span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">10</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">location</span></span><span class="pl-pse">}</span>>
-              &lt;<span class="pl-ent">img</span> <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">locationIcon</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">locationIcon</span></span><span class="pl-pse">}</span> />
-              <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">location</span></span><span class="pl-pse">}</span>
-            &lt;/<span class="pl-ent"><span class="pl-c1">PaddedText</span></span>>
+        &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">container</span><span class="pl-pse">}</span>>
+          &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">content</span><span class="pl-pse">}</span>>
+            &lt;<span class="pl-ent">PaddedText</span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">10</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">name</span><span class="pl-pse">}</span>>
+              <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">name</span><span class="pl-pse">}</span>
+            &lt;/<span class="pl-ent">PaddedText</span>>
+            &lt;<span class="pl-ent">PaddedText</span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">10</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">location</span><span class="pl-pse">}</span>>
+              &lt;<span class="pl-ent">img</span> <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">locationIcon</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">locationIcon</span><span class="pl-pse">}</span> />
+              <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">location</span><span class="pl-pse">}</span>
+            &lt;/<span class="pl-ent">PaddedText</span>>
             &lt;<span class="pl-ent">br</span> />
-            &lt;<span class="pl-ent"><span class="pl-c1">PaddedText</span></span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">10</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">text</span></span><span class="pl-pse">}</span>>
-              <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">text</span></span><span class="pl-pse">}</span>
-            &lt;/<span class="pl-ent"><span class="pl-c1">PaddedText</span></span>>
+            &lt;<span class="pl-ent">PaddedText</span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">10</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">text</span><span class="pl-pse">}</span>>
+              <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">text</span><span class="pl-pse">}</span>
+            &lt;/<span class="pl-ent">PaddedText</span>>
           &lt;/<span class="pl-ent">div</span>>
         &lt;/<span class="pl-ent">div</span>>
       &lt;/<span class="pl-ent">div</span>>
@@ -179,139 +179,139 @@
 
 <span class="pl-k">const</span> <span class="pl-en">SourceText</span> <span class="pl-k">=</span> <span class="pl-smi">props</span> <span class="pl-k">=></span> {
   <span class="pl-k">const</span> <span class="pl-smi">style</span> <span class="pl-k">=</span> {
-<span class="pl-c1">    <span class="pl-s">container</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">bottom</span>:</span> <span class="pl-c1">30</span>,
-<span class="pl-c1">      <span class="pl-s">left</span>:</span> <span class="pl-c1">40</span>,
-<span class="pl-c1">      <span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">zIndex</span>:</span> <span class="pl-c1">100</span>
+    <span class="pl-c1"><span class="pl-s">container</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">bottom</span>:</span> <span class="pl-c1">30</span>,
+      <span class="pl-c1"><span class="pl-s">left</span>:</span> <span class="pl-c1">40</span>,
+      <span class="pl-c1"><span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">zIndex</span>:</span> <span class="pl-c1">100</span>
     },
-<span class="pl-c1">    <span class="pl-s">text</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">background</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">black</span>,
-<span class="pl-c1">      <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">white</span>,
-<span class="pl-c1">      <span class="pl-s">fontSize</span>:</span> <span class="pl-c1">23</span>,
-<span class="pl-c1">      <span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.5</span>
+    <span class="pl-c1"><span class="pl-s">text</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">background</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">black</span>,
+      <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">white</span>,
+      <span class="pl-c1"><span class="pl-s">fontSize</span>:</span> <span class="pl-c1">23</span>,
+      <span class="pl-c1"><span class="pl-s">lineHeight</span>:</span> <span class="pl-c1">1.5</span>
     }
   };
 
-<span class="pl-k">  return</span> (
-    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">container</span></span><span class="pl-pse">}</span>>
-      &lt;<span class="pl-ent"><span class="pl-c1">PaddedText</span></span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">10</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">style</span><span class="pl-k">.</span><span class="pl-smi">text</span></span><span class="pl-pse">}</span>>
-        <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">children</span></span><span class="pl-pse">}</span>
-      &lt;/<span class="pl-ent"><span class="pl-c1">PaddedText</span></span>>
+  <span class="pl-k">return</span> (
+    &lt;<span class="pl-ent">div</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">container</span><span class="pl-pse">}</span>>
+      &lt;<span class="pl-ent">PaddedText</span> <span class="pl-e">spacing</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">10</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">style</span></span><span class="pl-k">.</span><span class="pl-smi">text</span><span class="pl-pse">}</span>>
+        <span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">props</span></span><span class="pl-k">.</span><span class="pl-smi">children</span><span class="pl-pse">}</span>
+      &lt;/<span class="pl-ent">PaddedText</span>>
     &lt;/<span class="pl-ent">div</span>>
   );
 };
 
 <span class="pl-k">const</span> <span class="pl-en">Project</span> <span class="pl-k">=</span> () <span class="pl-k">=></span> {
   <span class="pl-k">const</span> <span class="pl-smi">styles</span> <span class="pl-k">=</span> {
-<span class="pl-c1">    <span class="pl-s">base</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">black</span>,
-<span class="pl-c1">      <span class="pl-s">fontFamily</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>BlinkMacSystemFont<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">fontWeight</span>:</span> <span class="pl-c1">700</span>
+    <span class="pl-c1"><span class="pl-s">base</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">black</span>,
+      <span class="pl-c1"><span class="pl-s">fontFamily</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>BlinkMacSystemFont<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">fontWeight</span>:</span> <span class="pl-c1">700</span>
     },
-<span class="pl-c1">    <span class="pl-s">video</span>:</span> {
-<span class="pl-c1">      <span class="pl-s">centered</span>:</span> {
-<span class="pl-c1">        <span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
-<span class="pl-c1">        <span class="pl-s">height</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>,
-<span class="pl-c1">        <span class="pl-s">left</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>50%<span class="pl-pds">"</span></span>,
-<span class="pl-c1">        <span class="pl-s">transform</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>translate(-50%, 0)<span class="pl-pds">"</span></span>
+    <span class="pl-c1"><span class="pl-s">video</span>:</span> {
+      <span class="pl-c1"><span class="pl-s">centered</span>:</span> {
+        <span class="pl-c1"><span class="pl-s">position</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>absolute<span class="pl-pds">"</span></span>,
+        <span class="pl-c1"><span class="pl-s">height</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>100%<span class="pl-pds">"</span></span>,
+        <span class="pl-c1"><span class="pl-s">left</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>50%<span class="pl-pds">"</span></span>,
+        <span class="pl-c1"><span class="pl-s">transform</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>translate(-50%, 0)<span class="pl-pds">"</span></span>
       }
     }
   };
 
-<span class="pl-k">  return</span> (
-    &lt;<span class="pl-ent"><span class="pl-c1">Gideo</span></span> <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">600</span></span><span class="pl-pse">}</span> <span class="pl-e">height</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">600</span></span><span class="pl-pse">}</span> <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">30</span></span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">styles</span><span class="pl-k">.</span><span class="pl-smi">base</span></span><span class="pl-pse">}</span>>
-      &lt;<span class="pl-ent"><span class="pl-c1">Border</span></span> <span class="pl-e">begin</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">0</span></span><span class="pl-pse">}</span> <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">30</span></span><span class="pl-pse">}</span> />
+  <span class="pl-k">return</span> (
+    &lt;<span class="pl-ent">Gideo</span> <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">600</span><span class="pl-pse">}</span> <span class="pl-e">height</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">600</span><span class="pl-pse">}</span> <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">30</span><span class="pl-pse">}</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">styles</span></span><span class="pl-k">.</span><span class="pl-smi">base</span><span class="pl-pse">}</span>>
+      &lt;<span class="pl-ent">Border</span> <span class="pl-e">begin</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">0</span><span class="pl-pse">}</span> <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">30</span><span class="pl-pse">}</span> />
 
-      &lt;<span class="pl-ent"><span class="pl-c1">Video</span></span>
-        <span class="pl-e">begin</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">0</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">6</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">Video</span>
+        <span class="pl-e">begin</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">0</span><span class="pl-pse">}</span>
+        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">6</span><span class="pl-pse">}</span>
         <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/man-working-during-dawn.mp4<span class="pl-pds">"</span></span>
-        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">styles</span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span></span><span class="pl-pse">}</span>
+        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">styles</span></span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span><span class="pl-pse">}</span>
       />
-      &lt;<span class="pl-ent"><span class="pl-c1">OpeningText</span></span> <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span> <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span> <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">390</span></span><span class="pl-pse">}</span>>
+      &lt;<span class="pl-ent">OpeningText</span> <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span> <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span> <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">390</span><span class="pl-pse">}</span>>
         These
-        &lt;<span class="pl-ent">span</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">{<span class="pl-c1"> <span class="pl-s">color</span>:</span><span class="pl-smi"> colors</span><span class="pl-k">.</span><span class="pl-smi">primary</span> }</span><span class="pl-pse">}</span>> 4 food tech startups &lt;/<span class="pl-ent">span</span>>
+        &lt;<span class="pl-ent">span</span> <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span>{ <span class="pl-c1"><span class="pl-s">color</span>:</span> <span class="pl-smi"><span class="pl-smi">colors</span></span><span class="pl-k">.</span><span class="pl-smi">primary</span> }<span class="pl-pse">}</span>> 4 food tech startups &lt;/<span class="pl-ent">span</span>>
         are worth sharing
-      &lt;/<span class="pl-ent"><span class="pl-c1">OpeningText</span></span>>
+      &lt;/<span class="pl-ent">OpeningText</span>>
 
-      &lt;<span class="pl-ent"><span class="pl-c1">Video</span></span>
-        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">6</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">Video</span>
+        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">6</span><span class="pl-pse">}</span>
         <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/people-at-the-market.mp4<span class="pl-pds">"</span></span>
-        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">styles</span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span></span><span class="pl-pse">}</span>
+        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">styles</span></span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span><span class="pl-pse">}</span>
       />
-      &lt;<span class="pl-ent"><span class="pl-c1">StepText</span></span>
-        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">400</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">StepText</span>
+        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">1</span><span class="pl-pse">}</span>
+        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">400</span><span class="pl-pse">}</span>
         <span class="pl-e">height</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>80%<span class="pl-pds">"</span></span>
         <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Agruppa<span class="pl-pds">"</span></span>
         <span class="pl-e">location</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Bogota, Colombia<span class="pl-pds">"</span></span>
         <span class="pl-e">text</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Connects vendors with small farmers to establish direct supply chains and reduce costs<span class="pl-pds">"</span></span>
       />
 
-      &lt;<span class="pl-ent"><span class="pl-c1">Video</span></span>
-        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">6</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">Video</span>
+        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">6</span><span class="pl-pse">}</span>
         <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/cows-in-the-field.mp4<span class="pl-pds">"</span></span>
-        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">styles</span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span></span><span class="pl-pse">}</span>
+        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">styles</span></span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span><span class="pl-pse">}</span>
       />
-      &lt;<span class="pl-ent"><span class="pl-c1">StepText</span></span>
-        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">2</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">390</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">StepText</span>
+        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">2</span><span class="pl-pse">}</span>
+        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">390</span><span class="pl-pse">}</span>
         <span class="pl-e">height</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>50%<span class="pl-pds">"</span></span>
         <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Cowlar<span class="pl-pds">"</span></span>
         <span class="pl-e">location</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Islamabad, Pakistan<span class="pl-pds">"</span></span>
         <span class="pl-e">text</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Produces a smart collar to help farmers improve daily herd health and boost milk yields<span class="pl-pds">"</span></span>
       />
 
-      &lt;<span class="pl-ent"><span class="pl-c1">Video</span></span>
-        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">6</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">Video</span>
+        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">6</span><span class="pl-pse">}</span>
         <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/tractor-in-field.mp4<span class="pl-pds">"</span></span>
-        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">styles</span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span></span><span class="pl-pse">}</span>
+        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">styles</span></span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span><span class="pl-pse">}</span>
       />
-      &lt;<span class="pl-ent"><span class="pl-c1">StepText</span></span>
-        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">3</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">420</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">StepText</span>
+        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">3</span><span class="pl-pse">}</span>
+        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">420</span><span class="pl-pse">}</span>
         <span class="pl-e">height</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>140%<span class="pl-pds">"</span></span>
         <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>GenZ Technology<span class="pl-pds">"</span></span>
         <span class="pl-e">location</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Seattle, USA<span class="pl-pds">"</span></span>
         <span class="pl-e">text</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Develops spray equipment that provides superior crop coverage while reducing air and soil pollution<span class="pl-pds">"</span></span>
       />
 
-      &lt;<span class="pl-ent"><span class="pl-c1">Video</span></span>
-        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">6</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">Video</span>
+        <span class="pl-e">startAfter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">duration</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">6</span><span class="pl-pse">}</span>
         <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/greenhouse.mp4<span class="pl-pds">"</span></span>
-        <span class="pl-e">startAt</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">7</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">playbackRate</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">0.6</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">styles</span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span></span><span class="pl-pse">}</span>
+        <span class="pl-e">startAt</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">7</span><span class="pl-pse">}</span>
+        <span class="pl-e">playbackRate</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">0.6</span><span class="pl-pse">}</span>
+        <span class="pl-e">style</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">styles</span></span><span class="pl-k">.</span><span class="pl-smi">video</span><span class="pl-k">.</span><span class="pl-smi">centered</span><span class="pl-pse">}</span>
       />
-      &lt;<span class="pl-ent"><span class="pl-c1">StepText</span></span>
-        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">4</span></span><span class="pl-pse">}</span>
-        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">465</span></span><span class="pl-pse">}</span>
+      &lt;<span class="pl-ent">StepText</span>
+        <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">endWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>
+        <span class="pl-e">counter</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">4</span><span class="pl-pse">}</span>
+        <span class="pl-e">width</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">465</span><span class="pl-pse">}</span>
         <span class="pl-e">height</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>90%<span class="pl-pds">"</span></span>
         <span class="pl-e">name</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Illuminum Greenhouses<span class="pl-pds">"</span></span>
         <span class="pl-e">location</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Kenya<span class="pl-pds">"</span></span>
         <span class="pl-e">text</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Constructs affordable greenhouses and drip irrigation kits for small-scale farmers using solar panels and sensors<span class="pl-pds">"</span></span>
       />
 
-      &lt;<span class="pl-ent"><span class="pl-c1">SourceText</span></span> <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span> <span class="pl-e">endWidth</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">-1</span></span><span class="pl-pse">}</span>>
-        Song: <span class="pl-c1">&<span class="pl-ent">nbsp</span>;</span>Deep Breath,&lt;<span class="pl-ent">br</span> />Mattia Vlad Morleo
-      &lt;/<span class="pl-ent"><span class="pl-c1">SourceText</span></span>>
+      &lt;<span class="pl-ent">SourceText</span> <span class="pl-e">startWith</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span> <span class="pl-e">endWidth</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">-1</span><span class="pl-pse">}</span>>
+        Song: <span class="pl-c1"> </span>Deep Breath,&lt;<span class="pl-ent">br</span> />Mattia Vlad Morleo
+      &lt;/<span class="pl-ent">SourceText</span>>
 
-      &lt;<span class="pl-ent"><span class="pl-c1">Audio</span></span> <span class="pl-e">begin</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">0</span></span><span class="pl-pse">}</span> <span class="pl-e">end</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">30</span></span><span class="pl-pse">}</span> <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/deep-breath.mp3<span class="pl-pds">"</span></span> />
-    &lt;/<span class="pl-ent"><span class="pl-c1">Gideo</span></span>>
+      &lt;<span class="pl-ent">Audio</span> <span class="pl-e">begin</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">0</span><span class="pl-pse">}</span> <span class="pl-e">end</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-c1">30</span><span class="pl-pse">}</span> <span class="pl-e">src</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/deep-breath.mp3<span class="pl-pds">"</span></span> />
+    &lt;/<span class="pl-ent">Gideo</span>>
   );
 };
 
-<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(&lt;<span class="pl-ent"><span class="pl-c1">Project</span></span> />,<span class="pl-c1"> document</span><span class="pl-k">.</span><span class="pl-en">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span>));</pre></div><p>While the animations are very basic, there's a lot more you can do with CSS. You can also use canvas and do more advanced animations and transitions.</p><p>There are some bugs I want to tackle before open sourcing the code but hopefully I'll be able to share a first version soon!</p></div></article><div id="comments-root" data-gist="aa0ef8f07dc4b1b2bb2e9160002606f8"></div><div class="u-container CommentLink"><a class="u-btn" href="https://gist.github.com/aa0ef8f07dc4b1b2bb2e9160002606f8#comments">Write a comment on GitHub</a></div></div><script src="https://platform.twitter.com/widgets.js" async charset="utf-8"></script><script src="/static/js/main.f1385085.js" type="text/javascript"></script><iframe allowtransparency="true" frameborder="0" scrolling="no" style="display:none" title="Twitter settings iframe" src="https://platform.twitter.com/widgets/widget_iframe.bed9e19e565ca3b578705de9e73c29ed.html?origin=http%3A%2F%2Flocalhost%3A45678&settingsEndpoint=https%3A%2F%2Fsyndication.twitter.com%2Fsettings"></iframe><iframe allowtransparency="true" frameborder="0" scrolling="no" style="position:absolute;visibility:hidden;display:none;width:0;height:0;padding:0;border:none" title="Twitter analytics iframe" allowfullscreen id="rufous-sandbox"></iframe></body></html>
+<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(&lt;<span class="pl-ent">Project</span> />, <span class="pl-c1">document</span><span class="pl-k">.</span><span class="pl-en">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span>));</pre></div><p>While the animations are very basic, there's a lot more you can do with CSS. You can also use canvas and do more advanced animations and transitions.</p><p>There are some bugs I want to tackle before open sourcing the code but hopefully I'll be able to share a first version soon!</p></div></article><div id="comments-root" data-gist="aa0ef8f07dc4b1b2bb2e9160002606f8"></div><div class="u-container CommentLink"><a class="u-btn" href="https://gist.github.com/aa0ef8f07dc4b1b2bb2e9160002606f8#comments">Write a comment on GitHub</a></div></div><script src="https://platform.twitter.com/widgets.js" async charset="utf-8"></script><script src="/static/js/main.f23c74e2.js" type="text/javascript"></script><iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.6787510241df65d128e2b60207ad4c25.html?origin=http%3A%2F%2Flocalhost%3A45678" style="display:none" title="Twitter settings iframe"></iframe></body></html>

@@ -1,49 +1,49 @@
 <!DOCTYPE html><html data-react-helmet="lang" lang="pt"><head><meta charset="utf-8"><meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport"><link href="/static/css/main.a2116599.css" rel="stylesheet"><title>Criar um blog com Create React App e GitHub 🇵🇹 · Blog · David Francisco</title><link href="/favicon.ico" rel="shortcut icon" data-react-helmet="true"><link href="/icon.png" rel="apple-touch-icon" data-react-helmet="true"><meta content="David Marquês Francisco" data-react-helmet="true" name="author"><meta content="https://blog.david.tools" data-react-helmet="true" property="og:url"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" property="og:image"><meta content="summary" data-react-helmet="true" name="twitter:card"><meta content="@dmfrancisco" data-react-helmet="true" name="twitter:creator"><meta content="https://blog.david.tools/icon.jpg" data-react-helmet="true" name="twitter:image"><meta content="Existem vários projectos de código aberto muito bons para criar blogs estáticos, e Create React App pode ser um deles, se lhe juntar ferramentas para resolver algumas das limitações." data-react-helmet="true" name="description"><meta content="Criar um blog com Create React App e GitHub 🇵🇹" data-react-helmet="true" property="og:title"><meta content="Existem vários projectos de código aberto muito bons para criar blogs estáticos, e Create React App pode ser um deles, se lhe juntar ferramentas para resolver algumas das limitações." data-react-helmet="true" property="og:description"><meta content="Criar um blog com Create React App e GitHub 🇵🇹" data-react-helmet="true" name="twitter:title"><meta content="Existem vários projectos de código aberto muito bons para criar blogs estáticos, e Create React App pode ser um deles, se lhe juntar ferramentas para resolver algumas das limitações." data-react-helmet="true" name="twitter:description"></head><body><div id="root"><nav class="u-container Nav"><ul class="Nav-list"><li class="Nav-item"><a class="Nav-item-link" href="https://david.tools">Home</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://twitter.com/dmfrancisco">Twitter</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://github.com/dmfrancisco">GitHub</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://dribbble.com/davidfrancisco">Dribbble</a></li><li class="Nav-item"><a class="Nav-item-link" href="https://instagram.com/dmfrancisco">Instagram</a></li><li class="Nav-item"><a class="Nav-item-link" href="mailto:hello@dmfranc.com">Email</a></li></ul></nav><article class="u-container Post"><header><a class="Posts-title Posts-title--header active" href="/" aria-current="true">Blog</a> <em class="Posts-info Posts-info--header">Feb 20, 2018 · 14 min read</em></header><div class="markdown-body"><h1><a class="anchor" href="#criar-um-blog-com-create-react-app-e-github" id="user-content-criar-um-blog-com-create-react-app-e-github" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Criar um blog com Create React App e GitHub</h1><p><a href="https://github.com/facebook/create-react-app">Create React App</a> é uma ferramenta que permite criar aplicações React com maior facilidade. Possui no entanto <a href="https://github.com/facebook/create-react-app#popular-alternatives">algumas limitações</a> que deves ter em conta:</p><ul><li><p>A aplicação é renderizada apenas no cliente. Apesar de actualmente muitos motores de busca serem capazes de executar JavaScript, se a tua aplicação é maioritariamente estática (como é o caso dum blog) há vantagens em servir simplesmente ficheiros HTML renderizados por um servidor.</p></li><li><p>É possível manter múltiplos ficheiros HTML mas o código JavaScript é apenas injectado no ficheiro <code>index.html</code>. Se estás a criar um blog por exemplo, queres provavelmente um <code>&lt;title></code> e metatags Open Graph diferentes para cada artigo e, apesar de o conseguires fazer com JavaScript usando o <a href="https://github.com/nfl/react-helmet">react-helmet</a>, a maioria das plataformas (como o Twitter, Facebook e Slack) não as utilizarão, uma vez que não executam o código JavaScript.</p></li><li><p>Se planeias fazer deploy para o GitHub Pages ou outro serviço de static hosting similar, tem em atenção que se o teu roteador do cliente utilizar a API pushState history, os teus visitantes podem encontrar erros 404 ao fazerem refresh. <code>http://user.github.io/posts/hello-world</code> faz com que o servidor do GitHub Pages procure pelo ficheiro <code>posts/hello-world/index.html</code> que não existe. Isto é importante para qualquer tipo de aplicação, incluindo blogs.</p></li></ul><p>Agora que estamos a par das limitações, podemos criar um novo blog e tentar solucioná-las.</p><div></div><h2><a class="anchor" href="#passo-1-create-react-app-e-limpeza" id="user-content-passo-1-create-react-app-e-limpeza" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Passo 1: Create React App e limpeza</h2><p>Começamos com os ficheiros auto-gerados habituais. Verifica se tens versões de Node e NPM recentes instaladas na tua máquina.</p><div class="highlight highlight-source-shell"><pre>npx create-react-app my-blog
 <span class="pl-c1">cd</span> my-blog
-npm start</pre></div><p>A aplicação deve agora estar a correr normalmente. Vamos remover alguns dos ficheiros gerados, incluindo o <code>registerServiceWorker.js</code>. Service Workers são muito úteis, mas é fácil encontrar problemas se se não tiver experiência com estes. Remove e simplifica tudo até que a pasta <code>src</code> esteja assim:</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> index.js<span class="pl-c"> */</span></span>
+npm start</pre></div><p>A aplicação deve agora estar a correr normalmente. Vamos remover alguns dos ficheiros gerados, incluindo o <code>registerServiceWorker.js</code>. Service Workers são muito úteis, mas é fácil encontrar problemas se se não tiver experiência com estes. Remove e simplifica tudo até que a pasta <code>src</code> esteja assim:</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> index.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> ReactDOM</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-dom<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> App</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./App<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">ReactDOM</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">App</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./App<span class="pl-pds">"</span></span>;
 <span class="pl-k">import</span> <span class="pl-s"><span class="pl-pds">"</span>./index.css<span class="pl-pds">"</span></span>;
 
-<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(&lt;<span class="pl-ent"><span class="pl-c1">App</span></span> />,<span class="pl-c1"> document</span><span class="pl-k">.</span><span class="pl-en">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span>));</pre></div><div class="highlight highlight-source-css"><pre><span class="pl-c"><span class="pl-c">/*</span> index.css <span class="pl-c">*/</span></span>
+<span class="pl-smi">ReactDOM</span><span class="pl-k">.</span><span class="pl-en">render</span>(&lt;<span class="pl-ent">App</span> />, <span class="pl-c1">document</span><span class="pl-k">.</span><span class="pl-en">getElementById</span>(<span class="pl-s"><span class="pl-pds">"</span>root<span class="pl-pds">"</span></span>));</pre></div><div class="highlight highlight-source-css"><pre><span class="pl-c"><span class="pl-c">/*</span> index.css <span class="pl-c">*/</span></span>
 
 <span class="pl-ent">body</span> {
   <span class="pl-c1"><span class="pl-c1">margin</span></span>: <span class="pl-c1">0</span>;
   <span class="pl-c1"><span class="pl-c1">padding</span></span>: <span class="pl-c1">0</span>;
   <span class="pl-c1"><span class="pl-c1">font-family</span></span>: <span class="pl-c1">sans-serif</span>;
-}</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> App.js<span class="pl-c"> */</span></span>
+}</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> App.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">export default</span> () <span class="pl-k">=></span> &lt;<span class="pl-ent">div</span> />;</pre></div><div></div><h2><a class="anchor" href="#passo-2-adicionar-um-roteador-e-alguns-componentes-b%C3%A1sicos" id="user-content-passo-2-adicionar-um-roteador-e-alguns-componentes-básicos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Passo 2: Adicionar um roteador e alguns componentes básicos</h2><p>Agora podemos executar o comando <code>npm install react-router-dom</code> de forma a podermos ter múltiplas páginas. Teremos uma página para a lista de artigos e ainda uma página para cada um desses artigos.</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> App.js<span class="pl-c"> */</span></span>
+<span class="pl-k">export</span> <span class="pl-k">default</span> () <span class="pl-k">=></span> &lt;div />;</pre></div><div></div><h2><a class="anchor" href="#passo-2-adicionar-um-roteador-e-alguns-componentes-b%C3%A1sicos" id="user-content-passo-2-adicionar-um-roteador-e-alguns-componentes-básicos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Passo 2: Adicionar um roteador e alguns componentes básicos</h2><p>Agora podemos executar o comando <code>npm install react-router-dom</code> de forma a podermos ter múltiplas páginas. Teremos uma página para a lista de artigos e ainda uma página para cada um desses artigos.</p><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> App.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span> {<span class="pl-smi"> BrowserRouter</span><span class="pl-k"> as</span><span class="pl-smi"> Router</span>,<span class="pl-smi"> Route</span>,<span class="pl-smi"> Switch</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">BrowserRouter</span> <span class="pl-k">as</span> <span class="pl-smi">Router</span>, <span class="pl-smi">Route</span>, <span class="pl-smi">Switch</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">import</span><span class="pl-smi"> Posts</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./Posts<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> Post</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./Post<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> NotFound</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./NotFound<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span><span class="pl-smi"> data</span><span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>./data<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">Posts</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./Posts<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">Post</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./Post<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">NotFound</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./NotFound<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">data</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./data<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">export default</span> () <span class="pl-k">=></span> (
-  &lt;<span class="pl-ent"><span class="pl-c1">Router</span></span>>
-    &lt;<span class="pl-ent"><span class="pl-c1">Switch</span></span>>
-      &lt;<span class="pl-ent"><span class="pl-c1">Route</span></span> <span class="pl-e">exact</span> <span class="pl-e">path</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">routeProps</span> <span class="pl-k">=></span> &lt;<span class="pl-ent"><span class="pl-c1">Posts</span></span> <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-k">...</span><span class="pl-smi">data</span></span><span class="pl-pse">}</span> /></span><span class="pl-pse">}</span> />
+<span class="pl-k">export</span> <span class="pl-k">default</span> () <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent">Router</span>>
+    &lt;<span class="pl-ent">Switch</span>>
+      &lt;<span class="pl-ent">Route</span> <span class="pl-e">exact</span> <span class="pl-e">path</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span> <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">routeProps</span> <span class="pl-k">=></span> &lt;Posts {...data} />} />
 
-      <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">entries</span>(<span class="pl-smi">data</span><span class="pl-k">.</span><span class="pl-smi">posts</span>)<span class="pl-k">.</span><span class="pl-en">map</span>(([<span class="pl-smi">slug</span>,<span class="pl-smi"> post</span>]) <span class="pl-k">=></span> (</span>
-<span class="pl-s1">        &lt;<span class="pl-ent"><span class="pl-c1">Route</span></span> </span>
-<span class="pl-s1">          <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">slug</span></span><span class="pl-pse">}</span></span>
-<span class="pl-s1">          <span class="pl-e">exact</span></span>
-<span class="pl-s1">          <span class="pl-e">path</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-s"><span class="pl-s">`</span><span class="pl-s">/<span class="pl-e">${<span class="pl-smi">slug</span>}</span></span><span class="pl-s">`</span></span></span><span class="pl-pse">}</span></span>
-<span class="pl-s1">          <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">({<span class="pl-smi"> match</span> }) <span class="pl-k">=></span> &lt;<span class="pl-ent"><span class="pl-c1">Post</span></span> <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-k">...</span><span class="pl-smi">post</span></span><span class="pl-pse">}</span> /></span><span class="pl-pse">}</span></span>
-<span class="pl-s1">        /></span>
-<span class="pl-s1">      ))</span><span class="pl-pse">}</span>
-
-      &lt;<span class="pl-ent"><span class="pl-c1">Route</span></span> <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">routeProps</span> <span class="pl-k">=></span> &lt;<span class="pl-ent"><span class="pl-c1">NotFound</span></span> /></span><span class="pl-pse">}</span> />
-    &lt;/<span class="pl-ent"><span class="pl-c1">Switch</span></span>>
-  &lt;/<span class="pl-ent"><span class="pl-c1">Router</span></span>>
+      {<span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">entries</span>(<span class="pl-smi"><span class="pl-smi">data</span></span><span class="pl-k">.</span><span class="pl-smi">posts</span>)<span class="pl-k">.</span><span class="pl-en">map</span>(([<span class="pl-smi">slug</span>, <span class="pl-smi">post</span>]) <span class="pl-k">=></span> (
+        &lt;<span class="pl-ent">Route</span> 
+          <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">slug</span><span class="pl-pse">}</span>
+          <span class="pl-e">exact</span>
+          <span class="pl-e">path</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-k">`</span><span class="pl-s">/</span><span class="pl-k">${</span><span class="pl-smi">slug</span><span class="pl-k">}</span><span class="pl-k">`</span><span class="pl-pse">}</span>
+          <span class="pl-e">render</span><span class="pl-k">=</span><span class="pl-pse">{</span>({ <span class="pl-smi">match</span> }) <span class="pl-k">=></span> &lt;Post {...post} />}
+<span class="pl-sr">        <span class="pl-pds">/</span>></span>
+<span class="pl-sr">      ))}</span>
+<span class="pl-sr"></span>
+<span class="pl-sr">      &lt;Route render={routeProps => &lt;NotFound <span class="pl-pds">/</span></span><span class="pl-k">></span><span class="pl-pse">}</span> />
+    <span class="pl-k">&lt;</span><span class="pl-sr"><span class="pl-pds">/</span>Switch></span>
+<span class="pl-sr">  &lt;<span class="pl-pds">/</span></span><span class="pl-smi">Router</span><span class="pl-k">></span>
 );</pre></div><div class="highlight highlight-source-js"><pre><span class="pl-c"><span class="pl-c">/*</span> data.js <span class="pl-c">*/</span></span>
 
 <span class="pl-k">export</span> <span class="pl-c1">default</span> {
@@ -61,51 +61,51 @@ npm start</pre></div><p>A aplicação deve agora estar a correr normalmente. Vam
         <span class="pl-s"><span class="pl-pds">"</span>You ask advice: ah, what a very human and very dangerous thing to do! For to give advice to a man who asks what to do with his life implies something very close to egomania. To presume to point a man to the right and ultimate goal -- to point with a trembling finger in the right direction is something only a fool would take upon himself.<span class="pl-pds">"</span></span>,
     },
   },
-};</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> NotFound.js<span class="pl-c"> */</span></span>
+};</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> NotFound.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span>, { <span class="pl-smi">Fragment</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">NavLink</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">export default</span> () <span class="pl-k">=></span> (
-  &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+<span class="pl-k">export</span> <span class="pl-k">default</span> () <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent">Fragment</span>>
     The page you are looking for was moved, removed,
     renamed or might never existed. &lt;<span class="pl-ent">br</span> />
-    &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Back to blog&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>>
-  &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
-);</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Posts.js<span class="pl-c"> */</span></span>
+    &lt;<span class="pl-ent">NavLink</span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Back to blog&lt;/<span class="pl-ent">NavLink</span>>
+  &lt;/<span class="pl-ent">Fragment</span>>
+);</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Posts.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span>, { <span class="pl-smi">Fragment</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">NavLink</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">export default</span> ({<span class="pl-smi"> posts</span> }) <span class="pl-k">=></span> (
-  &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+<span class="pl-k">export</span> <span class="pl-k">default</span> ({ <span class="pl-smi">posts</span> }) <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent">Fragment</span>>
     &lt;<span class="pl-ent">h1</span>>Blog&lt;/<span class="pl-ent">h1</span>>
 
     &lt;<span class="pl-ent">ol</span>>
-      <span class="pl-pse">{</span><span class="pl-s1"><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">entries</span>(<span class="pl-smi">posts</span>)<span class="pl-k">.</span><span class="pl-en">map</span>(([<span class="pl-smi">slug</span>,<span class="pl-smi"> post</span>]) <span class="pl-k">=></span> (</span>
-<span class="pl-s1">        &lt;<span class="pl-ent">li</span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">slug</span></span><span class="pl-pse">}</span>></span>
-<span class="pl-s1">          &lt;<span class="pl-ent">h2</span>></span>
-<span class="pl-s1">            &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">slug</span></span><span class="pl-pse">}</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">post</span><span class="pl-k">.</span><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>></span>
-<span class="pl-s1">          &lt;/<span class="pl-ent">h2</span>></span>
-<span class="pl-s1">          &lt;<span class="pl-ent">p</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">post</span><span class="pl-k">.</span><span class="pl-smi">summary</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">p</span>></span>
-<span class="pl-s1">          &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">post</span><span class="pl-k">.</span><span class="pl-smi">date</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>></span>
-<span class="pl-s1">        &lt;/<span class="pl-ent">li</span>></span>
-<span class="pl-s1">      ))</span><span class="pl-pse">}</span>
+      <span class="pl-pse">{</span><span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">entries</span>(<span class="pl-smi">posts</span>)<span class="pl-k">.</span><span class="pl-en">map</span>(([<span class="pl-smi">slug</span>, <span class="pl-smi">post</span>]) <span class="pl-k">=></span> (
+        &lt;<span class="pl-ent">li</span> <span class="pl-e">key</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">slug</span><span class="pl-pse">}</span>>
+          &lt;<span class="pl-ent">h2</span>>
+            &lt;<span class="pl-ent">NavLink</span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-smi">slug</span><span class="pl-pse">}</span>><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">post</span></span><span class="pl-k">.</span><span class="pl-smi">title</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">NavLink</span>>
+          &lt;/<span class="pl-ent">h2</span>>
+          &lt;<span class="pl-ent">p</span>><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">post</span></span><span class="pl-k">.</span><span class="pl-smi">summary</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">p</span>>
+          &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-smi"><span class="pl-smi">post</span></span><span class="pl-k">.</span><span class="pl-smi">date</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
+        &lt;/<span class="pl-ent">li</span>>
+      ))<span class="pl-pse">}</span>
     &lt;/<span class="pl-ent">ol</span>>
-  &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
-);</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Post.js<span class="pl-c"> */</span></span>
+  &lt;/<span class="pl-ent">Fragment</span>>
+);</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Post.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span>, { <span class="pl-smi">Fragment</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">NavLink</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">export default</span> ({<span class="pl-smi"> date</span>,<span class="pl-smi"> title</span> }) <span class="pl-k">=></span> (
-  &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+<span class="pl-k">export</span> <span class="pl-k">default</span> ({ <span class="pl-smi">date</span>, <span class="pl-smi">title</span> }) <span class="pl-k">=></span> (
+  &lt;<span class="pl-ent">Fragment</span>>
     &lt;<span class="pl-ent">h1</span>>
-      &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Blog&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>>
+      &lt;<span class="pl-ent">NavLink</span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Blog&lt;/<span class="pl-ent">NavLink</span>>
     &lt;/<span class="pl-ent">h1</span>>
-    &lt;<span class="pl-ent">h2</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">h2</span>>
-    &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">date</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
-  &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+    &lt;<span class="pl-ent">h2</span>><span class="pl-pse">{</span><span class="pl-smi">title</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">h2</span>>
+    &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-smi">date</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
+  &lt;/<span class="pl-ent">Fragment</span>>
 );</pre></div><div></div><h2><a class="anchor" href="#passo-3-gerir-a-head-do-documento" id="user-content-passo-3-gerir-a-head-do-documento" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Passo 3: Gerir a <code>head</code> do documento</h2><p>Se tudo correu bem, deves agora conseguir navegar pelas várias páginas. Vamos também executar <code>npm install react-helmet</code> de forma a poder gerir tags na <code>head</code>. Neste exemplo apenas é criado o <code>&lt;title></code> mas podes também utilizá-lo para tags Open Graph ou Twitter.</p><div class="highlight highlight-source-diff"><pre><span class="pl-c"><span class="pl-c">#</span> App.js</span>
 
 <span class="pl-md"><span class="pl-md">-</span>import React from "react";</span>
@@ -194,68 +194,68 @@ npm start</pre></div><p>A aplicação deve agora estar a correr normalmente. Vam
 <span class="pl-mi1"><span class="pl-mi1">+</span></span>
  body {
    margin: 0;
-   padding: 0;</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Post.js<span class="pl-c"> */</span></span>
+   padding: 0;</pre></div><div class="highlight highlight-source-js-jsx"><pre><span class="pl-c"><span class="pl-c">/*</span> Post.js <span class="pl-c">*/</span></span>
 
-<span class="pl-k">import</span><span class="pl-smi"> React</span>, {<span class="pl-smi"> Component</span>,<span class="pl-smi"> Fragment</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span> {<span class="pl-smi"> NavLink</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
-<span class="pl-k">import</span> {<span class="pl-smi"> Helmet</span> }<span class="pl-k"> from</span> <span class="pl-s"><span class="pl-pds">"</span>react-helmet<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> <span class="pl-smi">React</span>, { <span class="pl-smi">Component</span>, <span class="pl-smi">Fragment</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">NavLink</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-router-dom<span class="pl-pds">"</span></span>;
+<span class="pl-k">import</span> { <span class="pl-smi">Helmet</span> } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-helmet<span class="pl-pds">"</span></span>;
 
-<span class="pl-k">const</span> <span class="pl-smi">headers</span> <span class="pl-k">=</span> {<span class="pl-c1"> <span class="pl-s">Accept</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>application/vnd.github.v3.json<span class="pl-pds">"</span></span> };
+<span class="pl-k">const</span> <span class="pl-smi">headers</span> <span class="pl-k">=</span> { <span class="pl-c1"><span class="pl-s">Accept</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>application/vnd.github.v3.json<span class="pl-pds">"</span></span> };
 
-<span class="pl-k">export default</span> <span class="pl-k">class</span> <span class="pl-en">Post</span> <span class="pl-k">extends</span> <span class="pl-en">Component</span> {
+<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">Post</span> <span class="pl-k">extends</span> <span class="pl-smi">Component</span> {
   <span class="pl-smi">state</span> <span class="pl-k">=</span> {
-<span class="pl-c1">    <span class="pl-s">content</span>:</span><span class="pl-c1"> null</span>,
+    <span class="pl-c1"><span class="pl-s">content</span>:</span> <span class="pl-c1">null</span>,
   };
 
-  <span class="pl-en">fetchData</span>() {
-<span class="pl-k">    return</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-en">fetchGistMarkdownUrl</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">gist</span>)
+  <span class="pl-en"><span class="pl-s">fetchData</span></span>() {
+    <span class="pl-k">return</span> <span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-en">fetchGistMarkdownUrl</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span><span class="pl-k">.</span><span class="pl-smi">gist</span>)
       <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">fetchGistMarkdownText</span>)
       <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">fetchRenderedMarkdown</span>);
   }
 
-  <span class="pl-en">fetchGistMarkdownUrl</span>(<span class="pl-smi">id</span>) {
-<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-s">`</span><span class="pl-s">https://api.github.com/gists/<span class="pl-e">${<span class="pl-smi">id</span>}</span></span><span class="pl-s">`</span></span>, {<span class="pl-smi"> headers</span> })
-      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">json</span>())
-      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">json</span> <span class="pl-k">=></span><span class="pl-c1"> Object</span><span class="pl-k">.</span><span class="pl-en">values</span>(<span class="pl-smi">json</span><span class="pl-k">.</span><span class="pl-smi">files</span>)[<span class="pl-c1">0</span>]<span class="pl-k">.</span><span class="pl-smi">raw_url</span>);
+  <span class="pl-en"><span class="pl-s">fetchGistMarkdownUrl</span></span>(<span class="pl-smi">id</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">fetch</span>(<span class="pl-k">`</span><span class="pl-s">https://api.github.com/gists/</span><span class="pl-k">${</span><span class="pl-smi">id</span><span class="pl-k">}</span><span class="pl-k">`</span>, { <span class="pl-smi">headers</span> })
+      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span> <span class="pl-smi"><span class="pl-smi">response</span></span><span class="pl-k">.</span><span class="pl-en">json</span>())
+      <span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">json</span> <span class="pl-k">=></span> <span class="pl-c1">Object</span><span class="pl-k">.</span><span class="pl-en">values</span>(<span class="pl-smi"><span class="pl-smi">json</span></span><span class="pl-k">.</span><span class="pl-smi">files</span>)[<span class="pl-c1">0</span>]<span class="pl-k">.</span><span class="pl-smi">raw_url</span>);
   }
 
-  <span class="pl-en">fetchGistMarkdownText</span>(<span class="pl-smi">rawUrl</span>) {
-<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-smi">rawUrl</span>)<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">text</span>());
+  <span class="pl-en"><span class="pl-s">fetchGistMarkdownText</span></span>(<span class="pl-smi">rawUrl</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">fetch</span>(<span class="pl-smi">rawUrl</span>)<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span> <span class="pl-smi"><span class="pl-smi">response</span></span><span class="pl-k">.</span><span class="pl-en">text</span>());
   }
 
-  <span class="pl-en">fetchRenderedMarkdown</span>(<span class="pl-smi">text</span>) {
-<span class="pl-k">    return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">"</span>https://api.github.com/markdown<span class="pl-pds">"</span></span>, {
-<span class="pl-smi">      headers</span>,
-<span class="pl-c1">      <span class="pl-s">method</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>POST<span class="pl-pds">"</span></span>,
-<span class="pl-c1">      <span class="pl-s">body</span>:</span> <span class="pl-smi">JSON</span><span class="pl-k">.</span><span class="pl-en">stringify</span>({<span class="pl-smi"> text</span> }),
-    })<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span><span class="pl-smi"> response</span><span class="pl-k">.</span><span class="pl-en">text</span>());
+  <span class="pl-en"><span class="pl-s">fetchRenderedMarkdown</span></span>(<span class="pl-smi">text</span>) {
+    <span class="pl-k">return</span> <span class="pl-en">fetch</span>(<span class="pl-s"><span class="pl-pds">"</span>https://api.github.com/markdown<span class="pl-pds">"</span></span>, {
+      <span class="pl-smi">headers</span>,
+      <span class="pl-c1"><span class="pl-s">method</span>:</span> <span class="pl-s"><span class="pl-pds">"</span>POST<span class="pl-pds">"</span></span>,
+      <span class="pl-c1"><span class="pl-s">body</span>:</span> <span class="pl-c1">JSON</span><span class="pl-k">.</span><span class="pl-en">stringify</span>({ <span class="pl-smi">text</span> }),
+    })<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">response</span> <span class="pl-k">=></span> <span class="pl-smi"><span class="pl-smi">response</span></span><span class="pl-k">.</span><span class="pl-en">text</span>());
   }
 
-  <span class="pl-en">componentDidMount</span>() {
-<span class="pl-c1">    this</span><span class="pl-k">.</span><span class="pl-en">fetchData</span>()<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">content</span> <span class="pl-k">=></span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({<span class="pl-smi"> content</span> }));
+  <span class="pl-en"><span class="pl-s">componentDidMount</span></span>() {
+    <span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-en">fetchData</span>()<span class="pl-k">.</span><span class="pl-en">then</span>(<span class="pl-smi">content</span> <span class="pl-k">=></span> <span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-en">setState</span>({ <span class="pl-smi">content</span> }));
   }
 
-  <span class="pl-en">render</span>() {
-    <span class="pl-k">const</span> {<span class="pl-smi"> date</span>,<span class="pl-smi"> title</span> } <span class="pl-k">=</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">props</span>;
-    <span class="pl-k">const</span> {<span class="pl-smi"> content</span> } <span class="pl-k">=</span><span class="pl-c1"> this</span><span class="pl-k">.</span><span class="pl-smi">state</span>;
+  <span class="pl-en"><span class="pl-s">render</span></span>() {
+    <span class="pl-k">const</span> { <span class="pl-smi">date</span>, <span class="pl-smi">title</span> } <span class="pl-k">=</span> <span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">props</span>;
+    <span class="pl-k">const</span> { <span class="pl-smi">content</span> } <span class="pl-k">=</span> <span class="pl-c1">this</span><span class="pl-k">.</span><span class="pl-smi">state</span>;
 
-<span class="pl-k">    return</span> (
-      &lt;<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
-        &lt;<span class="pl-ent"><span class="pl-c1">Helmet</span></span>>
-          &lt;<span class="pl-ent">title</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">title</span>>
-        &lt;/<span class="pl-ent"><span class="pl-c1">Helmet</span></span>>
+    <span class="pl-k">return</span> (
+      &lt;<span class="pl-ent">Fragment</span>>
+        &lt;<span class="pl-ent">Helmet</span>>
+          &lt;<span class="pl-ent">title</span>><span class="pl-pse">{</span><span class="pl-smi">title</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">title</span>>
+        &lt;/<span class="pl-ent">Helmet</span>>
 
         &lt;<span class="pl-ent">h1</span>>
-          &lt;<span class="pl-ent"><span class="pl-c1">NavLink</span></span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Blog&lt;/<span class="pl-ent"><span class="pl-c1">NavLink</span></span>>
+          &lt;<span class="pl-ent">NavLink</span> <span class="pl-e">to</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>>Blog&lt;/<span class="pl-ent">NavLink</span>>
         &lt;/<span class="pl-ent">h1</span>>
-        &lt;<span class="pl-ent">h2</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">title</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">h2</span>>
-        &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-s1"><span class="pl-smi">date</span></span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
+        &lt;<span class="pl-ent">h2</span>><span class="pl-pse">{</span><span class="pl-smi">title</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">h2</span>>
+        &lt;<span class="pl-ent">em</span>><span class="pl-pse">{</span><span class="pl-smi">date</span><span class="pl-pse">}</span>&lt;/<span class="pl-ent">em</span>>
 
         &lt;<span class="pl-ent">div</span>
           <span class="pl-e">className</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>markdown-body<span class="pl-pds">"</span></span>
-          <span class="pl-e">dangerouslySetInnerHTML</span><span class="pl-k">=</span><span class="pl-pse">{</span><span class="pl-s1">{<span class="pl-c1"> <span class="pl-s">__html</span>:</span><span class="pl-smi"> content</span> }</span><span class="pl-pse">}</span>
+          <span class="pl-e">dangerouslySetInnerHTML</span><span class="pl-k">=</span><span class="pl-pse">{</span>{ <span class="pl-c1"><span class="pl-s">__html</span>:</span> <span class="pl-smi">content</span> }<span class="pl-pse">}</span>
         />
-      &lt;/<span class="pl-ent"><span class="pl-c1">Fragment</span></span>>
+      &lt;/<span class="pl-ent">Fragment</span>>
     );
   }
 }</pre></div><div></div><h2><a class="anchor" href="#passo-5-hospedar-no-github-pages" id="user-content-passo-5-hospedar-no-github-pages" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Passo 5: Hospedar no GitHub Pages</h2><p>Estamos prontos a enviar o nosso código. Vou fazer <code>npm install gh-pages</code> para tornar o processo de deploy para o GitHub Pages mais fácil.</p><div class="highlight highlight-source-diff"><pre> {
@@ -323,4 +323,4 @@ REACT_APP_ACCESS_TOKEN=<span class="pl-s"><span class="pl-pds">"</span>your-gith
 <span class="pl-mi1"><span class="pl-mi1">+</span>const headers = {</span>
 <span class="pl-mi1"><span class="pl-mi1">+</span>  Accept: "application/vnd.github.v3.json",</span>
 <span class="pl-mi1"><span class="pl-mi1">+</span>  Authorization: `Basic ${base64.encode(accessToken + ":")}`,</span>
-<span class="pl-mi1"><span class="pl-mi1">+</span>};</span></pre></div><p>E é tudo! Deves agora ter um blog criado com JavaScript que os visitantes podem ler, mesmo que tenham JavaScript desactivado.</p><p>Se este setup for suficiente para ti, óptimo! Mas considera ler sobre o projecto <a href="https://www.gatsbyjs.org/" rel="nofollow">Gatsby</a>. É muito provavelmente uma solução mais apropriada para um blog e pode ajudar-te com funcionalidades mais avançadas, nomeadamente RSS.</p><p>Obrigado por leres. Espero que te tenha ajudado de alguma forma<g-emoji class="g-emoji" alias="wave" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44b.png">👋</g-emoji></p></div></article><div id="comments-root" data-gist="ad8794fef22f015324161062fcdc2b41"></div><div class="u-container CommentLink"><a class="u-btn" href="https://gist.github.com/ad8794fef22f015324161062fcdc2b41#comments">Write a comment on GitHub</a></div></div><script src="https://platform.twitter.com/widgets.js" async charset="utf-8"></script><script src="/static/js/main.f1385085.js" type="text/javascript"></script><iframe allowtransparency="true" frameborder="0" scrolling="no" style="display:none" title="Twitter settings iframe" src="https://platform.twitter.com/widgets/widget_iframe.bed9e19e565ca3b578705de9e73c29ed.html?origin=http%3A%2F%2Flocalhost%3A45678&settingsEndpoint=https%3A%2F%2Fsyndication.twitter.com%2Fsettings"></iframe><iframe allowtransparency="true" frameborder="0" scrolling="no" style="position:absolute;visibility:hidden;display:none;width:0;height:0;padding:0;border:none" title="Twitter analytics iframe" allowfullscreen id="rufous-sandbox"></iframe></body></html>
+<span class="pl-mi1"><span class="pl-mi1">+</span>};</span></pre></div><p>E é tudo! Deves agora ter um blog criado com JavaScript que os visitantes podem ler, mesmo que tenham JavaScript desactivado.</p><p>Se este setup for suficiente para ti, óptimo! Mas considera ler sobre o projecto <a href="https://www.gatsbyjs.org/" rel="nofollow">Gatsby</a>. É muito provavelmente uma solução mais apropriada para um blog e pode ajudar-te com funcionalidades mais avançadas, nomeadamente RSS.</p><p>Obrigado por leres. Espero que te tenha ajudado de alguma forma<g-emoji class="g-emoji" alias="wave" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f44b.png">👋</g-emoji></p></div></article><div id="comments-root" data-gist="ad8794fef22f015324161062fcdc2b41"></div><div class="u-container CommentLink"><a class="u-btn" href="https://gist.github.com/ad8794fef22f015324161062fcdc2b41#comments">Write a comment on GitHub</a></div></div><script src="https://platform.twitter.com/widgets.js" async charset="utf-8"></script><script src="/static/js/main.f23c74e2.js" type="text/javascript"></script><iframe allowtransparency="true" frameborder="0" scrolling="no" src="https://platform.twitter.com/widgets/widget_iframe.6787510241df65d128e2b60207ad4c25.html?origin=http%3A%2F%2Flocalhost%3A45678" style="display:none" title="Twitter settings iframe"></iframe></body></html>
