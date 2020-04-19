@@ -33,6 +33,13 @@ export default {
     },
   ],
   posts: {
+    "the-future-of-jscoach": {
+      title: "The future of JS.coach",
+      summary:
+        "I started JS.coach in late 2015 and maintained it somewhat actively until 2019. It has been neglected since then but now, in 2020, the project finally has new maintainers.",
+      date: "2020-04-18",
+      gist: "9c033e7122df5e0ff0257fab607b7944",
+    },
     "forking-a-npm-package": {
       title: "Forking a npm package",
       summary:
